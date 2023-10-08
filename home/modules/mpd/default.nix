@@ -5,9 +5,9 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.rice;
+  cfg = config.local;
 in {
-  options.rice.mpd = {
+  options.local.mpd = {
     enable = mkOption {
       type = types.bool;
       default = cfg.enable;
@@ -19,6 +19,7 @@ in {
     };
   };
   config = mkIf cfg.mpd.enable {
+    home.packages = with pkgs; [mpc-cli];
     services.mpd = {
       enable = true;
       musicDirectory = cfg.mpd.path;
@@ -57,7 +58,7 @@ in {
         }
       ];
       settings = {
-        execute_on_song_change = ''notify-send "Playing" "$(${pkgs.mpc}/bin/mpc --format '%title% - %album%' current)"'';
+        execute_on_song_change = ''notify-send "Playing" "$(mpc --format '%title% - %album%' current)"'';
         visualizer_data_source = "/tmp/mpd.fifo";
         visualizer_output_name = "visualizer";
         visualizer_in_stereo = "yes";

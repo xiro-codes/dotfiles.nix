@@ -1,24 +1,29 @@
-{ pkgs
-, config
-, lib
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  ...
 }:
 with lib; let
-  cfg = config.rice;
-in
-{
-  options.rice.hyprland = {
+  cfg = config.local;
+in {
+  options.local.hyprland = {
     enable = mkOption {
       type = types.bool;
       default = cfg.enable;
     };
   };
   config = mkIf (cfg.hyprland.enable) {
-    home.packages = [ pkgs.swaybg ];
+    home.packages = [pkgs.swaybg];
     wayland.windowManager = {
       hyprland.enable = true;
       hyprland.systemdIntegration = true;
       hyprland.settings = {
+        general = {
+          border_size = "4";
+          "col.active_border" = "rgba(33ccffee)";
+          "col.inactive_border" = "rgba(595959aa)";
+        };
         decoration = {
           rounding = "5";
           shadow_offset = "0 5";
@@ -44,7 +49,7 @@ in
         ];
         bind = [
           "$mod, Return, exec, kitty"
-          "$mod, P, exec, wofi"
+          "$mod, P, exec, fuzzel"
 
           "$mod_SHIFT,Q, killactive"
           "$mod, F, fullscreen"

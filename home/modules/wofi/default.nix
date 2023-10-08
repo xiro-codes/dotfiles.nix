@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.rice;
+  cfg = config.local;
 in {
-  options.rice.wofi.enable = mkOption {
+  options.local.wofi.enable = mkOption {
     type = types.bool;
     default = cfg.hyprland.enable;
   };

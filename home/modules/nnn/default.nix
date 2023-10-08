@@ -1,9 +1,14 @@
-{pkgs, config, lib, ...}: let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types;
-  cfg = config.rice;
+  cfg = config.local;
 in {
   imports = [];
-  options.rice.nnn = {
+  options.local.nnn = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -11,6 +16,6 @@ in {
   };
   config = mkIf (cfg.nnn.enable) {
     programs.nnn.enable = true;
-    rice.fileManager = "${config.programs.nnn.finalPackage}/bin/nnn";
+    local.fileManager = "${config.programs.nnn.finalPackage}/bin/nnn";
   };
 }

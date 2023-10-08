@@ -1,9 +1,14 @@
-{pkgs, config, lib, ...}: let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkIf mkOption types;
-  cfg = config.rice;
+  cfg = config.local;
 in {
   imports = [];
-  options.rice.kitty = {
+  options.local.kitty = {
     enable = mkOption {
       type = types.bool;
       default = cfg.enable;
@@ -36,6 +41,5 @@ in {
         hash = cfg.kitty.theme.hash;
       });
     };
-
   };
 }

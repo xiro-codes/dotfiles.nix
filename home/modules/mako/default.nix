@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.rice;
+  cfg = config.local;
 in {
-  options.rice.mako.enable = mkOption {
+  options.local.mako.enable = mkOption {
     type = types.bool;
     default = cfg.hyprland.enable;
   };

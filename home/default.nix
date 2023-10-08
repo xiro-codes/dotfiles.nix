@@ -1,8 +1,10 @@
-{ system, version, ... }: { pkgs
-                          , ...
-                          }: {
+{
+  system,
+  version,
+  ...
+}: {pkgs, ...}: {
   imports = [
-    ./rice
+    ./modules
   ];
   home = {
     stateVersion = version;
@@ -20,7 +22,7 @@
     ];
   };
   fonts.fontconfig.enable = true;
-  rice.enable = true;
+  local.enable = true;
   programs = {
     home-manager.enable = true;
     fish.enable = true;

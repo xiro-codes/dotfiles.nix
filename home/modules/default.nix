@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
-  cfg = config.rice;
+  cfg = config.local;
 in {
   imports = [
     ./nnn
@@ -20,14 +20,14 @@ in {
     ./fuzzel
     ./mpd
   ];
-  options.rice = {
+  options.local = {
     enable = mkEnableOption "Enable custom tweaks most UX and Sytle focused.";
     extraPackages = mkOption {
       type = types.listOf types.package;
       default = [];
     };
-    editor = mkOption { type = types.str; };
-    fileManager = mkOption { type = types.str; };
+    editor = mkOption {type = types.str;};
+    fileManager = mkOption {type = types.str;};
   };
 
   config = mkIf (cfg.enable) {
@@ -37,9 +37,10 @@ in {
         VISUAL = cfg.editor;
         FILEMANAGER = cfg.fileManager;
       };
-      packages = cfg.extraPackages ++ [
-
-      ];
+      packages =
+        cfg.extraPackages
+        ++ [
+        ];
     };
   };
 }

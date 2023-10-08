@@ -1,13 +1,14 @@
-{ system
-, version
-, hostName
-,
-}: { config
-   , lib
-   , pkgs
-   , ...
-   }: {
-  imports = [ ];
+{
+  system,
+  version,
+  hostName,
+}: {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [];
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "America/Chicago";
   nixpkgs.config.allowUnfree = true;
@@ -17,7 +18,7 @@
         "https://nix-community.cachix.org"
         "https://cache.nixos.org/"
       ];
-      trusted-users = [ "root" "tod" ];
+      trusted-users = ["root" "tod"];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
@@ -35,7 +36,7 @@
     };
     optimise = {
       automatic = true;
-      dates = [ "weekly" ];
+      dates = ["weekly"];
     };
   };
 
@@ -51,8 +52,8 @@
       timeout = 5;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    kernelModules = [ "kvm-amd" ];
-    kernelParams = [ ];
+    kernelModules = ["kvm-amd"];
+    kernelParams = [];
     initrd.availableKernelModules = [
       "xhci_pci"
       "ahci"
@@ -86,13 +87,13 @@
     };
   };
   swapDevices = [
-    { device = "/dev/disk/by-label/SWAP"; }
+    {device = "/dev/disk/by-label/SWAP";}
   ];
   networking = {
     inherit hostName;
     useDHCP = false;
     interfaces.wlan0.useDHCP = true;
-    firewall.allowedTCPPorts = [ 24070 27036 ];
+    firewall.allowedTCPPorts = [24070 27036];
     networkmanager = {
       enable = true;
       wifi.backend = "iwd";
@@ -105,7 +106,7 @@
   users.users.tod = {
     name = "tod";
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "networkmanager" "input" "uinput" "dialout" ];
+    extraGroups = ["wheel" "audio" "networkmanager" "input" "uinput" "dialout"];
     shell = pkgs.fish;
     password = "sapphire";
   };
@@ -126,7 +127,11 @@
         user = "tod";
       };
     };
-    komga.enable = true;
+    komga = {
+      enable = true;
+      port = 8090;
+      openFirewall = true;
+    };
   };
   environment.variables = {
     CLUTTER_BACKEND = "wayland";
@@ -140,9 +145,8 @@
     _JAVA_AWT_WM_NONREPARENTING = "1";
     _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=on";
   };
-  environment.systemPackages = with pkgs;[
+  environment.systemPackages = with pkgs; [
     xdg-user-dirs
-    pop-icon-theme
   ];
   system.stateVersion = version;
 }

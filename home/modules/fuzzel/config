@@ -1,15 +1,16 @@
-dpi-aware=no
-icon-theme=Pos-Os
-width=25
-font=CascadiaCode:weight=bold:size=36
-line-height=50
+dpi-aware=yes
+width=100
+icon-theme=Numix-Light
+font=CascadiaCode:size=12
+line-height=30
 fields=name,generic,comment,categories,filename,keywords
-terminal=foot -e
+terminal=kitty
 prompt="❯   "
 layer=overlay
 [colors]
-background=282a36fa
-selection=3d4474fa
+background=e1e2e7fa
+text=587539fa
+selection=3760bffa
 border=fffffffa
 
 [border]

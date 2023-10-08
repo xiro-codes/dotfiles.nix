@@ -1,10 +1,11 @@
-{ pkgs
-, config
-, lib
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  ...
 }:
 with lib; let
-  cfg = config.rice;
+  cfg = config.local;
   lock = pkgs.writeShellScriptBin "lock" ''
     ${pkgs.swaylock-effects}/bin/swaylock --screenshots \
        --clock \
@@ -19,16 +20,15 @@ with lib; let
        --separator-color 00000000 \
        --fade-in 0.2 \
   '';
-in
-{
-  options.rice.sway = {
+in {
+  options.local.sway = {
     enable = mkOption {
       type = types.bool;
       default = false;
     };
   };
   config = mkIf (cfg.sway.enable) {
-    home.packages = [ lock ];
+    home.packages = [lock];
 
     xdg.configFile."sway/config".source = ./config.sway;
 
@@ -40,6 +40,5 @@ in
         After = "graphical.target";
       };
     };
-
   };
 }

@@ -1,20 +1,25 @@
-{pkgs, config, lib, ...}: let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types;
-  cfg = config.rice;
+  cfg = config.local;
 in {
   imports = [];
-  options.rice.ranger = {
+  options.local.ranger = {
     enable = mkOption {
       type = types.bool;
       default = cfg.enable;
     };
   };
   config = mkIf (cfg.ranger.enable) {
-    home.packages = [ pkgs.ranger ];
+    home.packages = [pkgs.ranger];
     xdg.configFile = {
       "ranger/rifle.conf".source = ./rifle.conf;
-      "ranger/rc.conf".source  = ./rc.conf;
+      "ranger/rc.conf".source = ./rc.conf;
     };
-    rice.fileManager = "${pkgs.ranger}/bin/ranger";
+    local.fileManager = "${pkgs.ranger}/bin/ranger";
   };
 }
