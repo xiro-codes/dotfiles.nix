@@ -79,7 +79,9 @@ map <leader>rf :set foldmethod=indent<CR>zM<CR>
 map <leader>uf :set foldmethod=manual<CR>zR<CR>
 map <leader>vt :VspTerm <CR>
 map <leader>st :SpTerm <CR>
-map <leader>vv :Vista coc !<CR>
+
+map <leader>vv :Vista !<CR>
+map <leader>sf :Files !<CR>
 " remap quit to close
 "
 tnoremap <Esc> <C-\><C-n>
@@ -100,7 +102,7 @@ nnoremap <S-Tab> :tabnext<cr>
 nnoremap <silent> gd <Plug>(coc-definition)
 nnoremap <silent> gt <Plug>(coc-type-definition)
 nnoremap <silent> sd :call <SID>show_documentation()<CR>
-nnoremap <silent> fmt :Format <CR>
+nnoremap <silent> ff :Format <CR>
 nnoremap <silent> st :Todo<CR>
 
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()

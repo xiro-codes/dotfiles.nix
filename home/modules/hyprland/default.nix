@@ -6,6 +6,7 @@
 }:
 with lib; let
   cfg = config.local;
+  variables = config.home.sessionVariables;
 in {
   options.local.hyprland = {
     enable = mkOption {
@@ -48,8 +49,9 @@ in {
           "DP-3,6"
         ];
         bind = [
-          "$mod, Return, exec, kitty"
-          "$mod, E, exec, $EDITOR"
+          "$mod, Return, exec, ${variables.TERMINAL}"
+          "$mod, E, exec, ${variables.EDITOR}"
+          "$mod_SHIFT, E, exec, ${variables.FILEMANAGER}"
           "$mod, P, exec, fuzzel"
 
           "$mod_SHIFT,Q, killactive"
@@ -60,6 +62,11 @@ in {
           "$mod, J, movefocus, d"
           "$mod, K, movefocus, u"
           "$mod, L, movefocus, r"
+
+          "$mod_SHIFT, H, movewindow, l"
+          "$mod_SHIFT, J, movewindow, d"
+          "$mod_SHIFT, K, movewindow, u"
+          "$mod_SHIFT, L, movewindow, r"
 
           "$mod, U, workspace, 1"
           "$mod, I, workspace, 2"

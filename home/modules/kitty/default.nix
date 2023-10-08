@@ -29,6 +29,7 @@ in {
     };
   };
   config = mkIf (cfg.kitty.enable) {
+    local.terminal = "${pkgs.kitty}/bin/kitty";
     programs.kitty = {
       enable = true;
       font = {

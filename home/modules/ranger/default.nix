@@ -20,6 +20,5 @@ in {
       "ranger/rifle.conf".source = ./rifle.conf;
       "ranger/rc.conf".source = ./rc.conf;
     };
-    local.fileManager = "${pkgs.ranger}/bin/ranger";
   };
 }

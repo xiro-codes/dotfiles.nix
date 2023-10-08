@@ -22,10 +22,12 @@
     ];
   };
   fonts.fontconfig.enable = true;
-  local.enable = true;
+  local = {
+    enable = true;
+    fileManager = "${pkgs.pcmanfm}/bin/pcmanfm";
+  };
   programs = {
     home-manager.enable = true;
-    fish.enable = true;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
