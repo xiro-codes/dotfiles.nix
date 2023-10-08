@@ -49,6 +49,7 @@ in {
         ];
         bind = [
           "$mod, Return, exec, kitty"
+          "$mod, E, exec, $EDITOR"
           "$mod, P, exec, fuzzel"
 
           "$mod_SHIFT,Q, killactive"
