@@ -19,6 +19,7 @@
       pcmanfm
       heroic
       btop
+      vlc
     ];
   };
   fonts.fontconfig.enable = true;

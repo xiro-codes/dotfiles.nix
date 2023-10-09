@@ -19,7 +19,7 @@
   };
 
   networking.hostName = hostName;
-
+  security.sudo.wheelNeedsPassword = false;
   fileSystems = {
     "/" = {
       label = "ROOT";
@@ -79,6 +79,7 @@
       port = 8090;
       openFirewall = true;
     };
+    openssh.enable = true;
   };
 
   system.stateVersion = version;
