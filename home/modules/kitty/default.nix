@@ -16,15 +16,15 @@ in {
     theme = {
       name = mkOption {
         type = types.str;
-        default = "tokyonight_day";
+        default = "gruvbox_dark";
       };
       repo = mkOption {
         type = types.str;
-        default = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/kitty/";
+        default = "https://raw.githubusercontent.com/wdomitrz/kitty_gruvbox_theme/master/";
       };
       hash = mkOption {
         type = types.str;
-        default = "sha256-UgbGeUMKrTjYNyH3MBrh7znAQLz375u8KpDGwDBurkc=";
+        default = "sha256-l9qWf09W0rMUCo5fJngFFWOrrOfPM9yI1RkfZUL6Stc=";
       };
     };
   };

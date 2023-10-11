@@ -22,9 +22,9 @@ in {
     home.packages = with pkgs; [pavucontrol jq];
     programs.waybar = {
       enable = true;
-      style = ./style.css;
+      style = ./style.2.css;
     };
-    xdg.configFile."waybar/config".source = ./config.json;
+    xdg.configFile."waybar/config".source = ./config.2.json;
 
     systemd.user.services.waybar = {
       Unit = {

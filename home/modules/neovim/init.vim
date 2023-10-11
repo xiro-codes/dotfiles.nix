@@ -45,7 +45,8 @@ set sessionoptions-=resize
 set guifont=Cascadia\ Code:h12
 filetype plugin indent on
 syntax enable
-colorscheme tokyonight-day
+colorscheme gruvbox
+set background=dark
 " - Plugin Settings
 let mapleader = ";"
 let g:startify_session_dir = '~/.config/nvim/sessions'
@@ -143,11 +144,8 @@ function! s:todo() abort
   endif
 endfunction
 
-let g:lightline = {'colorschem': 'tokyonight-day'}
+let g:lightline = {'colorscheme': 'gruvbox'}
 
 lua << EOF
-require("tokyonight").setup({
-	\ day_brightness = 0.9,
-  \ })
 require("rust-tools").setup({})
 EOF

@@ -18,9 +18,6 @@
       modules = [
         home-manager.nixosModules.home-manager
         (import ./host {inherit system version hostName;})
-        {
-          home-manager.users.tod = import ./home {inherit system version;};
-        }
       ];
     };
   };

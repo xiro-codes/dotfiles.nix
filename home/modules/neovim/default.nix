@@ -49,10 +49,11 @@ in {
             vim-toml
             vim-mustache-handlebars
             vista-vim
-            tokyonight-nvim
             fzf-vim
             nvim-lspconfig
-            camelcasemotion
+            gruvbox-nvim
+            nvim-treesitter.withAllGrammars
+            lightline-gruvbox-vim
           ]
           ++ (
             if cfg.nnn.enable
@@ -70,6 +71,11 @@ in {
             rnix = {
               command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
               filetypes = ["nix"];
+            };
+            rust-analyzer = {
+              settings.rust-analyzer = {
+                imports.granularity.group = "module";
+              };
             };
             nil = {
               command = "${pkgs.nil}/bin/nil";

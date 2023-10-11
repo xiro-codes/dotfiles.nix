@@ -1,13 +1,37 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }:
 with lib; let
   cfg = config.local;
   variables = config.home.sessionVariables;
-in {
+  lock-cmd = pkgs.writeShellScriptBin "lock" ''
+    ${pkgs.swaylock-effects}/bin/swaylock --screenshots \
+          --clock \
+          --indicator \
+          --datestr "%m-%d" \
+          --effect-blur 7x5 \
+          --ring-color 9AA5CE \
+          --key-hl-color 9ECE6A \
+          --text-color 7DCFFF \
+          --line-color 00000000 \
+          --inside-color 00000088 \
+          --separator-color 00000000 \
+          --effect-pixelate 40 \
+          --fade-in 0.2 \
+  '';
+  idle-cmd = pkgs.writeShellScriptBin "idle" ''
+    ${pkgs.swayidle}/bin/swayidle -w timeout 300 "${lock-cmd}/bin/lock" \
+                                     timeout 600 "${pkgs.hyprland}/bin/hyprctl dispatch dpms off" \
+                                     resume "${pkgs.hyprland}/bin/hyprctl dispatch dpms on" \
+                                     before-sleep "${lock-cmd}/bin/lock"
+  '';
+  sunset = pkgs.writeShellScriptBin "sunset" ''
+    ${pkgs.wlsunset}/bin/wlsunset -S 6:00 -s 17:00
+  '';
+in
+{
   options.local.hyprland = {
     enable = mkOption {
       type = types.bool;
@@ -15,26 +39,35 @@ in {
     };
   };
   config = mkIf (cfg.hyprland.enable) {
-    home.packages = [pkgs.swaybg];
+    xdg.configFile."hypr/shader.glsl".source = ./shader.glsl;
+    home.packages = [ pkgs.swaybg pkgs.swayidle idle-cmd lock-cmd];
     wayland.windowManager = {
       hyprland.enable = true;
-      hyprland.systemdIntegration = true;
+      hyprland.systemd.enable = true;
       hyprland.settings = {
         general = {
-          border_size = "4";
+          border_size = "2";
           "col.active_border" = "rgba(33ccffee)";
           "col.inactive_border" = "rgba(595959aa)";
         };
         decoration = {
-          rounding = "5";
+          rounding = "10";
           shadow_offset = "0 5";
           "col.shadow" = "rgba(00000099)";
+          inactive_opacity= "0.5";
+          active_opacity= "0.9";
+          fullscreen_opacity= "0.95";
+          #screen_shader = "/home/tod/.config/hypr/shader.glsl";
         };
         "$mod" = "ALT_L";
         exec-once = [
           "wl-paste --type text --watch cliphist store"
           "steam -silent"
           "swaybg -i ~/.wallpaper"
+          "easyeffects --gapplication-service &"
+          "${idle-cmd}/bin/idle"
+          "${lock-cmd}/bin/lock"
+          "${sunset}/bin/sunset"
         ];
         monitor = [
           "DP-2,1920x1080@60,0x1080,1"
@@ -52,7 +85,7 @@ in {
           "$mod, Return, exec, ${variables.TERMINAL}"
           "$mod, E, exec, ${variables.EDITOR}"
           "$mod_SHIFT, E, exec, ${variables.FILEMANAGER}"
-          "$mod, P, exec, fuzzel"
+          "$mod, P, exec, rofi -show drun"
 
           "$mod_SHIFT,Q, killactive"
           "$mod, F, fullscreen"

@@ -15,7 +15,7 @@ in {
     ./sway
     ./mako
     ./waybar
-    ./wofi
+    ./rofi
     ./hyprland
     ./fuzzel
     ./mpd
