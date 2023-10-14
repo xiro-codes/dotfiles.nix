@@ -19,7 +19,7 @@ in {
     };
   };
   config = mkIf (cfg.waybar.enable) {
-    home.packages = with pkgs; [pavucontrol jq];
+    home.packages = with pkgs; [pavucontrol jq wttrbar];
     programs.waybar = {
       enable = true;
       style = ./style.2.css;

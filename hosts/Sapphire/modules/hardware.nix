@@ -17,6 +17,7 @@ in
     hardware = {
       bluetooth.enable = true;
       opengl.enable = true;
+	  keyboard.qmk.enable = true;
       pulseaudio.enable = lib.mkForce false;
       enableRedistributableFirmware = true;
     };

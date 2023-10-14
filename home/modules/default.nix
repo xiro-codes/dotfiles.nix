@@ -30,6 +30,7 @@ in {
     editor = mkOption {type = types.str;};
     fileManager = mkOption {type = types.str;};
     terminal = mkOption {type = types.str;};
+    launcher = mkOption {type = types.str;};
   };
 
   config = mkIf (cfg.enable) {
@@ -39,6 +40,7 @@ in {
         VISUAL = cfg.editor;
         FILEMANAGER = cfg.fileManager;
         TERMINAL = cfg.terminal;
+        LAUNCHER = cfg.launcher;
       };
       packages =
         cfg.extraPackages

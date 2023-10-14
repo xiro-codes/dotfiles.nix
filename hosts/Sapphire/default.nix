@@ -8,12 +8,13 @@
    , ...
    }: {
   imports = [
-    ./modules
+    ../modules
   ];
   local = {
     enable = true;
     packages = with pkgs; [
       xdg-user-dirs
+      pulseaudioFull
     ];
   };
 
@@ -21,6 +22,7 @@
   security.sudo.wheelNeedsPassword = false;
   security.polkit.enable = true;
   security.pam.services.swaylock = { };
+
   fileSystems = {
     "/" = {
       label = "ROOT";
@@ -69,17 +71,11 @@
       pulse.enable = true;
     };
     xserver = {
-      enable = false;
-      displayManager.sddm.enable = false;
-      desktopManager.plasma5.enable = false;
-      desktopManager.gnome.enable = false;
-      desktopManager.enlightenment.enable = false;
-      desktopManager.deepin.enable = false;
-      desktopManager.budgie.enable = false;
-      desktopManager.cinnamon.enable = false;
+      enable = true;
+      displayManager.gdm.enable = true;
     };
     greetd = {
-      enable = true;
+      enable = false;
       settings.default_session = {
         command = "${pkgs.hyprland}/bin/Hyprland";
         user = "tod";
@@ -92,38 +88,12 @@
     };
     openssh.enable = true;
     postgresql = {
-      enable = true;
+      enable = false;
       initialScript = pkgs.writeText "init" ''
         CREATE USER master SUPERUSER WITH LOGIN PASSWORD 'password';
         CREATE DATABASE main;
       '';
     };
   };
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-    elisa
-    gwenview
-    okular
-    oxygen
-    khelpcenter
-    konsole
-    plasma-browser-integration
-    print-manager
-  ];
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs.gnome; [
-    cheese # webcam tool
-    gnome-music
-    gnome-terminal
-    gedit # text editor
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    gnome-characters
-    totem # video player
-    tali # poker game
-    atomix # puzzle game
-  ]);
   system.stateVersion = version;
 }

@@ -32,7 +32,8 @@ set foldmethod=syntax
 set nofoldenable
 set autoread
 set laststatus=2
-set guifont=Cascadia\ Code:h8
+set undodir=~/.config/nvim/undo
+set guifont=Cascadia\ Code:h11
 set sessionoptions-=globals
 set sessionoptions-=localoptions
 set sessionoptions-=options
@@ -42,23 +43,25 @@ set sessionoptions-=winsize
 set sessionoptions-=buffers
 set sessionoptions-=resize
 " - Directives
-set guifont=Cascadia\ Code:h12
 filetype plugin indent on
 syntax enable
 colorscheme gruvbox
 set background=dark
 " - Plugin Settings
 let mapleader = ";"
-let g:startify_session_dir = '~/.config/nvim/sessions'
+let g:startify_session_dir = "~/.config/nvim/sessions/"
 let g:startify_change_to_vcs_root  = 1
 let g:startify_change_to_dir = 0
+let g:neovide_confirm_quit=1
+let g:startify_session_persistence = 1
+let g:startify_custom_header= 'startify#center(startify#fortune#boxed())'
 
 autocmd BufWritePre * %s/\s\+$//e
 autocmd FocusGained,BufEnter * :checktime
 autocmd FocusGained,BufWritePost * :syntax sync fromstart
 autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 autocmd BufNewFile,BufRead *.tera :set filetype=html
-
+autocmd VimEnter * NERDTree | wincmd p
 
 augroup CursorLine
     au!
@@ -71,7 +74,7 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 Todo :call s:todo()
 command! -nargs=* SpTerm sp | terminal <args>
-command! -nargs=* VspTerm sp | terminal <args>
+command! -nargs=* VspTerm vsp | terminal <args>
 
 map Q <NOP>
 map gQ <NOP>
@@ -81,14 +84,17 @@ map <leader>uf :set foldmethod=manual<CR>zR<CR>
 map <leader>vt :VspTerm <CR>
 map <leader>st :SpTerm <CR>
 
-map <leader>vv :Vista !<CR>
+map <leader>vv :Vista <CR>
 map <leader>sf :Files !<CR>
 " remap quit to close
 "
 tnoremap <Esc> <C-\><C-n>
 nnoremap o o<Esc>
 nnoremap O O<Esc>
-
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>

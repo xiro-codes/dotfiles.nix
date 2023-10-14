@@ -12,7 +12,7 @@ in
     default = cfg.enable;
   };
   config = mkIf cfg.fish.enable {
-    home.packages = with pkgs; [];
+    home.packages = with pkgs; [ oh-my-fish ];
     programs = {
       eza = {
         enable = true;
@@ -23,7 +23,9 @@ in
 
       fish = {
         enable = true;
-
+        shellAbbrs = {
+          ls = "eza --icons";
+        };
         interactiveShellInit = ''
           set -g fish_color_normal 3760bf
           set -g fish_color_command 007197
@@ -46,6 +48,8 @@ in
           set -g fish_pager_color_description 848cb5
           set -g fish_pager_color_selected_background --background=b6bfe2
           zoxide init fish | source
+          fish_vi_key_bindings
+          set -g snorin_chevrons green green green
         '';
       };
     };

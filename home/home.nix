@@ -13,22 +13,21 @@
     librewolf
     nerdfonts
     unzip
-    wl-clipboard
-    libnotify
     p7zip
     sysstat
+    unrar
     pcmanfm
     heroic
     btop
     vlc
-    nwg-look
-    gruvbox-dark-gtk
-    breeze-icons
-    pgadmin4
-    obsidian
-    easyeffects
-    wlsunset
-    lutris
+    xarchiver
+    feh
+    qpwgraph
+    ppsspp-sdl-wayland
+    pcsx2
+    ryujinx
+    yuzu-mainline
+    mangohud
   ];
 
   fonts.fontconfig.enable = true;
@@ -39,9 +38,14 @@
 
   home.file = { };
   gtk = {
+    enable = true;
     theme= {
       package = pkgs.gruvbox-dark-gtk;
       name = "gruvbox-dark";
+    };
+    iconTheme = {
+      package = pkgs.gruvbox-dark-icons-gtk;
+      name = "oomox-gruvbox-dark";
     };
   };
   # Let Home Manager install and manage itself.
@@ -51,10 +55,6 @@
       enable = true;
       nix-direnv.enable = true;
     };
-    starship = {
-      enable = true;
-      enableFishIntegration = true;
-    };
     git = {
       enable = true;
       userName = "tdavis";
@@ -63,6 +63,13 @@
         credential.helper = "store";
         safe.directory = "*";
       };
+    };
+    obs-studio = {
+      enable = true;
+      plugins = [
+        pkgs.obs-studio-plugins.wlrobs
+        pkgs.obs-studio-plugins.obs-pipewire-audio-capture
+      ];
     };
   };
 }

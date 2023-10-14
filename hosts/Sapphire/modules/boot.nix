@@ -16,7 +16,7 @@ in
       loader = {
         efi.canTouchEfiVariables = true;
         systemd-boot.enable = true;
-        timeout = 5;
+        timeout = lib.mkForce 5;
       };
       kernelPackages = pkgs.linuxKernel.packages.linux_zen;
       kernelModules = [ "kvm-amd" ];

@@ -52,7 +52,9 @@ tooltip {
 #clock,
 #battery,
 #pulseaudio,
+#custom-weather,
 #network,
+#bluetooth,
 #mpd,
 #cpu,
 #memory,
@@ -70,7 +72,11 @@ tooltip {
     border-radius: 10px;
     margin-right: 10px;
 }
-
+#custom-weather {
+    border-radius: 0px 10px 10px 0px;
+    border-right: 0px;
+    margin-right: 10px;
+}
 #workspaces {
     background: #1e1e2e;
     border-radius: 10px;
@@ -95,19 +101,18 @@ tooltip {
     border-right: 0px;
 }
 
-#network {
+#bluetooth {
     color: #f9e2af;
     border-left: 0px;
     border-right: 0px;
 }
 
-#pulseaudio {
+#pulseaudio, #network {
     color: #89b4fa;
     border-left: 0px;
     border-right: 0px;
     border-radius: 10px 0px 0px 10px;
 }
-
 #mpd {
     color: #cba6f7;
     margin-right: 5px;

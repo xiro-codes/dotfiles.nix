@@ -62,7 +62,7 @@ in {
         visualizer_data_source = "/tmp/mpd.fifo";
         visualizer_output_name = "visualizer";
         visualizer_in_stereo = "yes";
-        visualizer_type = "wave";
+        visualizer_type = "spectrum";
         visualizer_look = "+|";
       };
     };

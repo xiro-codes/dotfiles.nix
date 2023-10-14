@@ -54,17 +54,14 @@ in {
             gruvbox-nvim
             nvim-treesitter.withAllGrammars
             lightline-gruvbox-vim
-          ]
-          ++ (
-            if cfg.nnn.enable
-            then [nnn-vim]
-            else []
-          )
-          ++ (
-            if cfg.ranger.enable
-            then [ranger-vim]
-            else []
-          ));
+			nerdtree
+            vim-devicons
+            coc-spell-checker
+            coc-rust-analyzer
+            coc-tsserver
+            coc-tslint-plugin
+            nvim-surround
+          ]);
         coc = {
           enable = true;
           settings.languageserver = {
