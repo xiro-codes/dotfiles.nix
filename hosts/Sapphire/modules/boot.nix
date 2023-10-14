@@ -20,7 +20,11 @@ in
       };
       kernelPackages = pkgs.linuxKernel.packages.linux_zen;
       kernelModules = [ "kvm-amd" ];
-      kernelParams = [ ];
+      kernelParams = [
+        "video=DP-3:2560x1080@60"
+        "video=DP-2:1920x1080@60"
+      ];
+      initrd.kernelModules = ["amdgpu"];
       initrd.availableKernelModules = [
         "xhci_pci"
         "ahci"

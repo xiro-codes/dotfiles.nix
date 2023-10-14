@@ -22,6 +22,9 @@ set autoindent
 set number
 set background=dark
 set showtabline=1
+set spell
+set spellsuggest=best,9
+set spelloptions=camel
 set nobackup
 set nowritebackup
 set updatetime=200
@@ -32,6 +35,7 @@ set foldmethod=syntax
 set nofoldenable
 set autoread
 set laststatus=2
+set undofile
 set undodir=~/.config/nvim/undo
 set guifont=Cascadia\ Code:h11
 set sessionoptions-=globals
@@ -79,8 +83,6 @@ command! -nargs=* VspTerm vsp | terminal <args>
 map Q <NOP>
 map gQ <NOP>
 
-map <leader>rf :set foldmethod=indent<CR>zM<CR>
-map <leader>uf :set foldmethod=manual<CR>zR<CR>
 map <leader>vt :VspTerm <CR>
 map <leader>st :SpTerm <CR>
 
@@ -91,10 +93,10 @@ map <leader>sf :Files !<CR>
 tnoremap <Esc> <C-\><C-n>
 nnoremap o o<Esc>
 nnoremap O O<Esc>
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+
+nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -151,7 +153,9 @@ function! s:todo() abort
 endfunction
 
 let g:lightline = {'colorscheme': 'gruvbox'}
-
+vmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
 lua << EOF
 require("rust-tools").setup({})
+require("nvim-surround").setup({})
 EOF

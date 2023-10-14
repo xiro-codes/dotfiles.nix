@@ -91,7 +91,7 @@
     udisks2.enable = true;
     devmon.enable = true;
     postgresql = {
-      enable = false;
+      enable = true;
       initialScript = pkgs.writeText "init" ''
         CREATE USER master SUPERUSER WITH LOGIN PASSWORD 'password';
         CREATE DATABASE main;

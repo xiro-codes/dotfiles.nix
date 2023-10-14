@@ -19,12 +19,7 @@ in {
       default = 6789;
     };
   };
-  config = let
-    nvc = pkgs.writeShellScriptBin "nvc" ''
-      ${pkgs.neovide}/bin/neovide
-    '';
-  in
-    mkIf (cfg.neovim.enable) {
+  config = mkIf (cfg.neovim.enable) {
       home.packages = [
         pkgs.neovide
         pkgs.rust-analyzer
@@ -56,11 +51,13 @@ in {
             lightline-gruvbox-vim
 			nerdtree
             vim-devicons
+            nvim-surround
+            vim-grammarous
             coc-spell-checker
             coc-rust-analyzer
             coc-tsserver
             coc-tslint-plugin
-            nvim-surround
+            coc-markdownlint
           ]);
         coc = {
           enable = true;
