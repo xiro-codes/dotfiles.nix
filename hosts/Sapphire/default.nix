@@ -8,7 +8,7 @@
    , ...
    }: {
   imports = [
-    ../modules
+    ./modules
   ];
   local = {
     enable = true;
@@ -87,6 +87,9 @@
       openFirewall = true;
     };
     openssh.enable = true;
+    gvfs.enable = true;
+    udisks2.enable = true;
+    devmon.enable = true;
     postgresql = {
       enable = false;
       initialScript = pkgs.writeText "init" ''
