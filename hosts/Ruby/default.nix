@@ -1,11 +1,12 @@
 {
-  system ? "x86_64-linux",
-  version ? "23.05",
-  pkgs,
+  system ,
+  version ,
+  hostName ,
 }: {
   config,
   lib,
   pkgs,
+  ...
 }:
 with pkgs; {
   imports = [
