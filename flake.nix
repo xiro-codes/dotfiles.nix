@@ -40,12 +40,7 @@
           earlyModules = [
             nixos-steamdeck.nixosModules.default
           ];
-          lateModules = [
-            ({
-              jovian.steam.enable = true;
-              jovian.steamdeck.enable = true;
-            })
-          ];
+          lateModules = [ ];
         }
         {
           hostName = "Sapphire";

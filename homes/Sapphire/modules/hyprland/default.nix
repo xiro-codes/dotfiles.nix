@@ -112,6 +112,7 @@ in
           "float, ^(swayimg)$"
           "float, ^(feh)$"
           "float, title:^(btop)"
+          "float, title:^(game)"
         ];
         exec-once = [
           "wl-paste --type text --watch cliphist store"
@@ -141,6 +142,7 @@ in
           "$mod_SHIFT, E, exec, ${variables.FILEMANAGER}"
           "$mod, P, exec, ${variables.LAUNCHER} -show drun -show-icons"
           "$mod_SHIFT, P, exec, ${variables.LAUNCHER} -show run -show-icons"
+
           "$mod, V, exec, paste-menu"
           "$mod_SHIFT, Q, killactive"
 
@@ -181,6 +183,10 @@ in
         ];
       };
       hyprland.extraConfig = ''
+        bind=$mod,Backspace, submap, clean
+        submap=clean
+        bind=$mod,Backspace, submap, reset
+        submap=reset
       '';
     };
   };
