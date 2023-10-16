@@ -17,23 +17,14 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+  home.packages = with pkgs;[
+    unzip
+    unrar
+    p7zip
+    heroic
+    ryujinx
+    pcsx2
+    ppsspp-sdl-wayland
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -66,5 +57,59 @@
   };
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  programs = {
+    home-manager.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+    git = {
+      enable = true;
+      userName = "tdavis";
+      userEmail = "me@tdavis.dev";
+      extraConfig = {
+        credential.helper = "store";
+        safe.directory = "*";
+      };
+    };
+    eza = {
+      enable = true;
+    };
+    zoxide = {
+      enable = true;
+    };
+
+    fish = {
+      enable = true;
+      shellAbbrs = {
+        ls = "eza --icons";
+        gcd = ''git commit -m "$(date)"'';
+      };
+      interactiveShellInit = ''
+        set -g fish_color_normal 3760bf
+        set -g fish_color_command 007197
+        set -g fish_color_keyword 9854f1
+        set -g fish_color_quote 8c6c3e
+        set -g fish_color_redirection 3760bf
+        set -g fish_color_end b15c00
+        set -g fish_color_error f52a65
+        set -g fish_color_param 7847bd
+        set -g fish_color_comment 848cb5
+        set -g fish_color_selection --background=b6bfe2
+        set -g fish_color_search_match --background=b6bfe2
+        set -g fish_color_operator 587539
+        set -g fish_color_escape 9854f1
+        set -g fish_color_autosuggestion 848cb5
+
+        set -g fish_pager_color_progress 848cb5
+        set -g fish_pager_color_prefix 007197
+        set -g fish_pager_color_completion 3760bf
+        set -g fish_pager_color_description 848cb5
+        set -g fish_pager_color_selected_background --background=b6bfe2
+        zoxide init fish | source
+        fish_vi_key_bindings
+        set -g snorin_chevrons green green green
+      '';
+    };
+  };
 }
