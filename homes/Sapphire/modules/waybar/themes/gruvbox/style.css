@@ -52,7 +52,6 @@ tooltip {
 #clock,
 #battery,
 #pulseaudio,
-#custom-weather,
 #network,
 #bluetooth,
 #mpd,
@@ -70,11 +69,6 @@ tooltip {
 
 #tray {
     border-radius: 10px;
-    margin-right: 10px;
-}
-#custom-weather {
-    border-radius: 0px 10px 10px 0px;
-    border-right: 0px;
     margin-right: 10px;
 }
 #workspaces {
@@ -96,9 +90,8 @@ tooltip {
 
 #clock {
     color: #fab387;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 10px 10px 10px 10px;
     margin-left: 5px;
-    border-right: 0px;
 }
 
 #bluetooth {
