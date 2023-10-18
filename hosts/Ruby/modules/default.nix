@@ -12,6 +12,7 @@ in
     ./hardware.nix
     ./nixos.nix
     ./automount
+    ./automount2
   ];
   options.local = {
     enable = mkEnableOption "Simplfy man host config";

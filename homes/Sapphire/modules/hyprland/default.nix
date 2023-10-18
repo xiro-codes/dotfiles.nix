@@ -6,7 +6,7 @@
 with lib; let
   cfg = config.local;
   variables = config.home.sessionVariables;
-
+  hide_waybar = pkgs.writeShellScriptBin "hide_waybar" "kill -SIGUSR1 $(pidof waybar)";
   lock = pkgs.writeShellScriptBin "swaylock" ''
     ${pkgs.swaylock-effects}/bin/swaylock --screenshots \
           --clock \
@@ -23,8 +23,7 @@ with lib; let
   '';
   idle-enable = pkgs.writeShellScriptBin "idle-enable" ''
     if ! [ -e "~/.idle" ]; then
-      ${pkgs.swayidle}/bin/swayidle -w timeout 1200 "${pkgs.hyprland}/bin/hyprctl dispatch dpms off" \
-                                      timeout 1800 "${lock}/bin/swaylock" \
+      ${pkgs.swayidle}/bin/swayidle -w timeout 1200 "${pkgs.hyprland}/bin/hyprctl dispatch dpms off; ${lock}/bin/swaylock" \
                                      resume "${pkgs.hyprland}/bin/hyprctl dispatch dpms on" \
                                      before-sleep "${lock}/bin/lock" &
       touch /home/tod/.idle
@@ -57,7 +56,11 @@ with lib; let
   '';
 in
 {
-  options.local.hyprland = {
+  options.local.hyprland = let
+    monitorOpts = {name, config, ...}: {
+
+    };
+  in {
     enable = mkOption {
       type = types.bool;
       default = cfg.enable;
@@ -66,6 +69,23 @@ in
       type = types.str;
       default = "~/.wallpaper";
     };
+
+    monitors = mkOption{
+      default = [];
+      type = with types; listOf str ;
+    };
+
+    #monitors = mkOption{
+    #  default = [];
+    #  type = with types; listOf (submodule {
+    #    options = {
+    #      name = mkOption {type = str;};
+    #      resolution = mkOption {type = str;};
+    #      position = mkOption {type = str;};
+    #      scale = mkOption {type = str;};
+    #    };
+    #  });
+    #};
   };
   config = mkIf (cfg.hyprland.enable) {
     home.packages = with pkgs; ([
@@ -84,6 +104,7 @@ in
       sunset
       paste-menu
       swayimg
+      hide_waybar
     ];
     wayland.windowManager = {
       hyprland.enable = true;
@@ -113,27 +134,27 @@ in
           "float, ^(feh)$"
           "float, title:^(btop)"
           "float, title:^(game)"
+          "nofocus, com-group_finity-mascot-Main"
+          "noblur, com-group_finity-mascot-Main"
+          "noshadow, com-group_finity-mascot-Main"
+          "noborder, com-group_finity-mascot-Main"
+          "float, com-group_finity-mascot-Main"
         ];
         exec-once = [
           "wl-paste --type text --watch cliphist store"
           "wl-paste --type image --watch cliphist store"
           "steam -silent"
           "${pkgs.easyeffects}/bin/easyeffects --gapplication-service &"
-          "${idle-enable}/bin/idle-enable"
           "${bg-set}/bin/bg-set"
-          "${sunset}/bin/sunset"
         ];
-        monitor = [
-          "DP-2,1920x1080@60,0x1080,1"
-          "DP-3,1920x1080@60,0x0,1"
-        ];
+        monitor = cfg.hyprland.monitors;
         workspace = [
-          "DP-2,1"
-          "DP-2,2"
-          "DP-2,3"
-          "DP-3,4"
-          "DP-3,5"
-          "DP-3,6"
+          "DP-1,1"
+          "DP-1,2"
+          "DP-1,3"
+          "DP-2,4"
+          "DP-2,5"
+          "DP-2,6"
         ];
         bind = [
           "$mod, Return, exec, ${variables.TERMINAL}"
@@ -149,7 +170,7 @@ in
           "$mod_SHIFT, Backspace, exec, rofi -show power-menu -modi power-menu:rofi-powermenu"
           "$mod, F, fullscreen"
           "$mod_SHIFT, F, togglefloating"
-
+          "$mod, X, exec, ${hide_waybar}/bin/hide_waybar"
           "$mod, H, movefocus, l"
           "$mod, J, movefocus, d"
           "$mod, K, movefocus, u"
@@ -175,7 +196,7 @@ in
           "$mod_SHIFT, M, movetoworkspace, 4"
           "$mod_SHIFT, comma,   movetoworkspace, 5"
           "$mod_SHIFT, period, movetoworkspace, 6"
-
+          "$mod, Backspace, exec, notify-send 'Keybinds disabled' -t 0"
         ];
         bindm = [
           "$mod,mouse:272, movewindow"
@@ -189,5 +210,8 @@ in
         submap=reset
       '';
     };
+    assertions = [
+      { assertion = config.local.rofi.enable; message = "hyprland depends on rofi";}
+    ];
   };
 }

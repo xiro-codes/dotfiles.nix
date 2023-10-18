@@ -23,7 +23,7 @@ in
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       WLR_NO_HARDWARE_CURSORS = "1";
       _JAVA_AWT_WM_NONREPARENTING = "1";
-      _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=on";
+      #_JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=on";
     };
     environment.systemPackages = cfg.packages;
   };

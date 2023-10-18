@@ -17,6 +17,7 @@ in
       useDHCP = false;
       interfaces.wlan0.useDHCP = true;
       firewall.allowedTCPPorts = [ 24070 27036 ];
+      firewall.enable = false;
       networkmanager = {
         enable = true;
         wifi.backend = "iwd";

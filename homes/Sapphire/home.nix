@@ -34,6 +34,11 @@
   local = {
     enable = true;
     fileManager = "${pkgs.pcmanfm}/bin/pcmanfm";
+    hyprland.monitors = [
+          "DP-1,1920x1080@60,0x1080,1"
+          "DP-2,1920x1080@60,0x0,1"
+    ];
+    waybar.theme = "gruvbox";
   };
 
   home.file = { };
