@@ -8,7 +8,6 @@
 	"height"= 40;
 	"modules-left"= [
 		"clock"
-		"custom/weather"
 		"network"
 		"cpu"
 		"memory"
@@ -27,7 +26,6 @@
 		"format-linked"= "{ifname} (No IP) ";
 		"format-disconnected"= "⚠  Disconnected";
 		"tooltip-format"= "{ifname}: {ipaddr}";
-		"on-click"= "rofi-wifi";
 	};
 	"hyprland/window"= {
 		"format"= "{}";
@@ -36,12 +34,10 @@
 		"format-on"= "";
 		"format-off"= "󰂲";
 		"format-connected"= "󰂱 {num_connections}";
-		"on-click"= "rofi-bluetooth";
 	};
 	"mpd"={
 		"format"= "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}: Playing [{title}]";
 		"format-stopped"= "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}🎧 No Song";
-		"on-click"= "kitty --class mkitty ncmpcpp";
 		"random-icons"= {
 			"on"= " ";
 		};
@@ -88,7 +84,6 @@
 		"interval"= 10;
 		"format"= " {}%";
 		"max-length"= 10;
-		"on-click"= "";
 	};
 	"memory"= {
 		"interval"= 30;
@@ -108,7 +103,6 @@
 	"pulseaudio"= {
 		"format"= "{icon} {volume}%";
 		"tooltip"= false;
-		"on-click"= "pavucontrol";
 		"format-muted"= " Muted";
 		"format-icons"= {
 			"headphone"= "";
