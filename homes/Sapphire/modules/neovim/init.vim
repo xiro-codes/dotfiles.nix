@@ -65,7 +65,7 @@ autocmd FocusGained,BufEnter * :checktime
 autocmd FocusGained,BufWritePost * :syntax sync fromstart
 autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 autocmd BufNewFile,BufRead *.tera :set filetype=html
-autocmd VimEnter * NERDTree | wincmd p
+autocmd VimEnter * Vista | wincmd p
 
 augroup CursorLine
     au!
@@ -93,9 +93,6 @@ map <leader>sf :Files !<CR>
 tnoremap <Esc> <C-\><C-n>
 nnoremap o o<Esc>
 nnoremap O O<Esc>
-
-nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>

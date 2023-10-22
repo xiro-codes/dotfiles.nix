@@ -31,6 +31,9 @@ in {
     fileManager = mkOption {type = types.str;};
     terminal = mkOption {type = types.str;};
     launcher = mkOption {type = types.str;};
+    wifi = mkOption {type = types.str;};
+    bluetooth = mkOption {type = types.str;};
+
   };
 
   config = mkIf (cfg.enable) {
@@ -41,6 +44,8 @@ in {
         FILEMANAGER = cfg.fileManager;
         TERMINAL = cfg.terminal;
         LAUNCHER = cfg.launcher;
+        WIFI = cfg.wifi;
+        BLUETOOTH = cfg.bluetooth;
       };
       packages =
         cfg.extraPackages

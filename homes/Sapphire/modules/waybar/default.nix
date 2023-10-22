@@ -27,7 +27,7 @@ in {
         enable = true;
         target = "hyprland-session.target";
       };
-      settings = import ./themes/${cfg.waybar.theme}/config.nix {inherit pkgs;};
+      settings = import ./themes/${cfg.waybar.theme}/config.nix {inherit pkgs cfg;};
       style = ./themes/${cfg.waybar.theme}/style.css;
     };
   };

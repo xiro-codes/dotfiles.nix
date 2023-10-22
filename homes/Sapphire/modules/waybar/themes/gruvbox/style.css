@@ -51,7 +51,7 @@ tooltip {
 #window,
 #clock,
 #battery,
-#pulseaudio,
+#wireplumber,
 #network,
 #bluetooth,
 #mpd,
@@ -101,7 +101,7 @@ tooltip {
     border-right: 0px;
 }
 
-#pulseaudio, #network {
+#wireplumber, #network {
     color: #89b4fa;
     border-left: 0px;
     border-right: 0px;

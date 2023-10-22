@@ -47,7 +47,6 @@
           earlyModules = [
             home-manager.nixosModules.default
             nixos-generators.nixosModules.all-formats
-            nixos-steamdeck.nixosModules.default
           ];
           lateModules = [
             ({ lib, ... }: {

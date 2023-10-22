@@ -26,7 +26,7 @@ in
       theme = ./gruvbox-dark.rasi;
     };
     local.launcher = "${pkgs.rofi-wayland}/bin/rofi";
-    #local.wifi = "${rofi-wifi}/bin/rofi-wifi";
-    #local.bluetooth = "${rofi-bluetooth}/bin/rofi-bluetooth";
+    local.wifi = "${rofi-wifi}/bin/rofi-wifi";
+    local.bluetooth = "${rofi-bluetooth}/bin/rofi-bluetooth";
   };
 }

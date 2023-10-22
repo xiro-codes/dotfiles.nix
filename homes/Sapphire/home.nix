@@ -35,8 +35,8 @@
     enable = true;
     fileManager = "${pkgs.pcmanfm}/bin/pcmanfm";
     hyprland.monitors = [
-          "DP-1,1920x1080@60,0x1080,1"
-          "DP-2,1920x1080@60,0x0,1"
+          {name = "DP-1"; scale= 1; width = 1920; height=1080; rate=60; x=0; y=1080; workspaces = [ 1 2 3];}
+          {name = "DP-2"; scale= 1; width = 1920; height=1080; rate=60; x=0; y=0; workspaces = [ 4 5 6];}
     ];
     waybar.theme = "gruvbox";
   };
@@ -44,6 +44,11 @@
   home.file = { };
   gtk = {
     enable = true;
+    cursorTheme = {
+      package = pkgs.vanilla-dmz;
+      name = "Vanilla-DMZ";
+      size = 16;
+    };
     theme= {
       package = pkgs.gruvbox-dark-gtk;
       name = "gruvbox-dark";
@@ -52,6 +57,10 @@
       package = pkgs.gruvbox-dark-icons-gtk;
       name = "oomox-gruvbox-dark";
     };
+  };
+  qt = {
+    enable = false;
+    platformTheme="gtk";
   };
   # Let Home Manager install and manage itself.
   programs = {

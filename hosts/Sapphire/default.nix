@@ -64,6 +64,7 @@
     steam.enable = true;
     git.enable = true;
     hyprland.enable = true;
+    kdeconnect.enable = true;
   };
   services = {
     pipewire = {
@@ -73,6 +74,7 @@
     xserver = {
       enable = true;
       displayManager.gdm.enable = true;
+      excludePackages = [ pkgs.xterm ];
     };
     greetd = {
       enable = false;

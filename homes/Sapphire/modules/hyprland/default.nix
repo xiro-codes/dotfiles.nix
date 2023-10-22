@@ -7,86 +7,65 @@ with lib; let
   cfg = config.local;
   variables = config.home.sessionVariables;
   hide_waybar = pkgs.writeShellScriptBin "hide_waybar" "kill -SIGUSR1 $(pidof waybar)";
-  lock = pkgs.writeShellScriptBin "swaylock" ''
+  reduce = f: list: (foldl f (head list) (tail list));
+
+  sunset = pkgs.writeShellScriptBin "sunset" ''
+    ${pkgs.wlsunset}/bin/wlsunset -S 6:00 -s 17:00
+  '';
+  paste-menu = pkgs.writeShellScriptBin "paste-menu" ''
+    wtype "$(cliphist list | rofi -dmenu | cliphist decode )"
+  '';
+  swaylock = pkgs.writeShellScriptBin "swaylock" ''
     ${pkgs.swaylock-effects}/bin/swaylock --screenshots \
           --clock \
           --indicator \
           --datestr "%m-%d" \
           --effect-blur 7x5 \
-          --ring-color 9AA5CE \
+          --ring-color 282828\
           --key-hl-color 9ECE6A \
           --text-color 7DCFFF \
           --line-color 00000000 \
           --inside-color 00000088 \
           --separator-color 00000000 \
-          --effect-pixelate 40 \
+          --effect-pixelate 40
   '';
-  idle-enable = pkgs.writeShellScriptBin "idle-enable" ''
-    if ! [ -e "~/.idle" ]; then
-      ${pkgs.swayidle}/bin/swayidle -w timeout 1200 "${pkgs.hyprland}/bin/hyprctl dispatch dpms off; ${lock}/bin/swaylock" \
-                                     resume "${pkgs.hyprland}/bin/hyprctl dispatch dpms on" \
-                                     before-sleep "${lock}/bin/lock" &
-      touch /home/tod/.idle
-    else
-      notify-send "Already Running Idle"
-    fi
+  idle = pkgs.writeShellScriptBin "idle" ''
+      ${pkgs.swayidle}/bin/swayidle lock "${swaylock}/bin/swaylock"
   '';
-  idle-disable = pkgs.writeShellScriptBin "idle-disable" ''
-    if [ -e "/home/tod/.idle" ]; then
-      notify-send "Disable Idle Locking"
-      pkill swayidle
-      rm /home/tod/.idle
-    else
-      notify-send "Idle not running"
-    fi
-  '';
-
-  sunset = pkgs.writeShellScriptBin "sunset" ''
-    ${pkgs.wlsunset}/bin/wlsunset -S 6:00 -s 17:00
-  '';
-
-  bg-set = pkgs.writeShellScriptBin "bg-set" ''
-    ${pkgs.swaybg}/bin/swaybg -i ${cfg.hyprland.wallpaperPath}
-  '';
-  paste-menu = pkgs.writeShellScriptBin "paste-menu" ''
-    wtype "$(cliphist list | rofi -dmenu | cliphist decode )"
-  '';
-  swayimg = pkgs.writeShellScriptBin "swayimg" ''
-    ${pkgs.swayimg}/bin/swayimg --class=swayimg $@
+  disable = pkgs.writeShellScriptBin "disable" ''
+    hyprctl dispatch submap clean
+    notify-send -w "Keybinds disable dismiss to Renable" -t 0
+    notify-send -w "Keybinds Renabled $(hyprctl dispatch submap reset)" -t 5
   '';
 in
 {
-  options.local.hyprland = let
-    monitorOpts = {name, config, ...}: {
+  options.local.hyprland = {
+      enable = mkOption {
+        type = types.bool;
+        default = cfg.enable;
+      };
+      wallpaperPath = mkOption {
+        type = types.str;
+        default = "~/.wallpaper";
+      };
 
+      monitors = mkOption {
+        default = [ ];
+        type = with types; listOf (submodule {
+          options = {
+            enabled = mkOption { type = bool; default = true; };
+            name = mkOption { type = str; };
+            width = mkOption { type = int; };
+            height = mkOption { type = int; };
+            rate = mkOption { type = int; };
+            scale = mkOption { type = int; };
+            x = mkOption { type = int; };
+            y = mkOption { type = int; };
+            workspaces = mkOption { type = listOf int; };
+          };
+        });
+      };
     };
-  in {
-    enable = mkOption {
-      type = types.bool;
-      default = cfg.enable;
-    };
-    wallpaperPath = mkOption {
-      type = types.str;
-      default = "~/.wallpaper";
-    };
-
-    monitors = mkOption{
-      default = [];
-      type = with types; listOf str ;
-    };
-
-    #monitors = mkOption{
-    #  default = [];
-    #  type = with types; listOf (submodule {
-    #    options = {
-    #      name = mkOption {type = str;};
-    #      resolution = mkOption {type = str;};
-    #      position = mkOption {type = str;};
-    #      scale = mkOption {type = str;};
-    #    };
-    #  });
-    #};
-  };
   config = mkIf (cfg.hyprland.enable) {
     home.packages = with pkgs; ([
       wl-clipboard
@@ -96,15 +75,12 @@ in
       wtype
       wlogout
       bc
+      swayidle
     ]) ++ [
-      idle-enable
-      idle-disable
-      lock
-      bg-set
-      sunset
       paste-menu
-      swayimg
       hide_waybar
+      swaylock
+      idle
     ];
     wayland.windowManager = {
       hyprland.enable = true;
@@ -125,6 +101,7 @@ in
         };
         "$mod" = "ALT_L";
         "$super" = "SUPER_L";
+
         windowrule = [
           "float, ^(mkitty)$"
           "float, ^(pavucontrol)$"
@@ -142,27 +119,31 @@ in
         ];
         exec-once = [
           "wl-paste --type text --watch cliphist store"
-          "wl-paste --type image --watch cliphist store"
           "steam -silent"
           "${pkgs.easyeffects}/bin/easyeffects --gapplication-service &"
-          "${bg-set}/bin/bg-set"
+          "${pkgs.swaybg}/bin/swaybg -i ${cfg.hyprland.wallpaperPath}"
+          "${idle}/bin/idle"
         ];
-        monitor = cfg.hyprland.monitors;
-        workspace = [
-          "DP-1,1"
-          "DP-1,2"
-          "DP-1,3"
-          "DP-2,4"
-          "DP-2,5"
-          "DP-2,6"
-        ];
+        monitor = map
+          (m:
+            let
+              resolution = "${toString m.width}x${toString m.height}@${toString m.rate}";
+              position = "${toString m.x}x${toString m.y}";
+            in
+            "${m.name},${if m.enabled then "${resolution},${position},${toString m.scale}" else "disable"}")
+          (cfg.hyprland.monitors);
+
+        workspace = reduce (cs: s: cs ++ s) (map (m: map (w: "${m.name}, ${toString w}") m.workspaces) (cfg.hyprland.monitors));
+
         bind = [
           "$mod, Return, exec, ${variables.TERMINAL}"
           "$mod_SHIFT, Return, exec, ${variables.TERMINAL} --class=fkitty"
           "$mod, E, exec, ${variables.EDITOR}"
           "$mod_SHIFT, E, exec, ${variables.FILEMANAGER}"
+
           "$mod, P, exec, ${variables.LAUNCHER} -show drun -show-icons"
           "$mod_SHIFT, P, exec, ${variables.LAUNCHER} -show run -show-icons"
+          "$mod, Space, exec, ${variables.LAUNCHER} -show window -show-icons"
 
           "$mod, V, exec, paste-menu"
           "$mod_SHIFT, Q, killactive"
@@ -196,7 +177,8 @@ in
           "$mod_SHIFT, M, movetoworkspace, 4"
           "$mod_SHIFT, comma,   movetoworkspace, 5"
           "$mod_SHIFT, period, movetoworkspace, 6"
-          "$mod, Backspace, exec, notify-send 'Keybinds disabled' -t 0"
+
+          "$mod, Backspace, exec, ${disable}/bin/disable"
         ];
         bindm = [
           "$mod,mouse:272, movewindow"
@@ -210,8 +192,12 @@ in
         submap=reset
       '';
     };
+    xdg.configFile."hypr/hyprpaper.conf".text =  ''
+      preload = ~/Pictures/Wallpapers/Gruvbox/smile.jpg
+      preload = ~/Pictures/Wallpapers/Gruvbox/city.png
+    '';
     assertions = [
-      { assertion = config.local.rofi.enable; message = "hyprland depends on rofi";}
+      { assertion = config.local.rofi.enable; message = "hyprland depends on rofi"; }
     ];
   };
 }

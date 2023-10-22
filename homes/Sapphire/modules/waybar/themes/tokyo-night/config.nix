@@ -1,4 +1,4 @@
-{ pkgs }: [{
+{ pkgs, ... }: [{
   "position" = "top";
   "height" = 30;
   "layer" = "top";

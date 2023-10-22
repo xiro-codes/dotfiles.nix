@@ -1,4 +1,4 @@
-{pkgs}:[{
+{pkgs, cfg}:[{
 	"layer"= "top";
 	"position"= "top";
 	"mod"= "dock";
@@ -16,16 +16,17 @@
 	"modules-center"= ["hyprland/window"];
 	"modules-right"= [
 		"tray"
-		"pulseaudio"
+		"wireplumber"
 		"bluetooth"
 		"mpd"
 	];
 	"network"= {
 		"format-wifi"= "  {essid}";
-		"format-ethernet"= "{ifname}: {ipaddr}/{cidr} ";
-		"format-linked"= "{ifname} (No IP) ";
+		"format-ethernet"= "{ifname}: {ipaddr} ";
+		"format-linked"= "{ifname} (No IP) ";
 		"format-disconnected"= "⚠  Disconnected";
 		"tooltip-format"= "{ifname}: {ipaddr}";
+        "on-click"= "${cfg.wifi}";
 	};
 	"hyprland/window"= {
 		"format"= "{}";
@@ -34,6 +35,7 @@
 		"format-on"= "";
 		"format-off"= "󰂲";
 		"format-connected"= "󰂱 {num_connections}";
+        "on-click"= "${cfg.bluetooth}";
 	};
 	"mpd"={
 		"format"= "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}: Playing [{title}]";
@@ -100,9 +102,10 @@
 		"format"= "{: %R   %d/%m}";
 		"tooltip-format"= "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
 	};
-	"pulseaudio"= {
+	"wireplumber"= {
 		"format"= "{icon} {volume}%";
 		"tooltip"= false;
+        "on-click"= "${pkgs.helvum}/bin/helvum";
 		"format-muted"= " Muted";
 		"format-icons"= {
 			"headphone"= "";
