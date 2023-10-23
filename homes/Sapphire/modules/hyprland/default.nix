@@ -33,9 +33,9 @@ with lib; let
       ${pkgs.swayidle}/bin/swayidle lock "${swaylock}/bin/swaylock"
   '';
   disable = pkgs.writeShellScriptBin "disable" ''
-    hyprctl dispatch submap clean
-    notify-send -w "Keybinds disable dismiss to Renable" -t 0
-    notify-send -w "Keybinds Renabled $(hyprctl dispatch submap reset)" -t 5
+    hyprctl dispatch submap clean && \
+    notify-send -w "Keybinds disabled dismiss to Renable" -t 0 && \
+    notify-send -w "Keybinds Renabled $(hyprctl dispatch submap reset)"
   '';
 in
 {
@@ -81,6 +81,7 @@ in
       hide_waybar
       swaylock
       idle
+      disable
     ];
     wayland.windowManager = {
       hyprland.enable = true;
@@ -120,9 +121,9 @@ in
         exec-once = [
           "wl-paste --type text --watch cliphist store"
           "steam -silent"
-          "${pkgs.easyeffects}/bin/easyeffects --gapplication-service &"
+          #"${pkgs.easyeffects}/bin/easyeffects --gapplication-service &"
           "${pkgs.swaybg}/bin/swaybg -i ${cfg.hyprland.wallpaperPath}"
-          "${idle}/bin/idle"
+          ''${pkgs.swayidle}/bin/swayidle lock ${swaylock}/bin/swaylock"''
         ];
         monitor = map
           (m:
@@ -188,7 +189,7 @@ in
       hyprland.extraConfig = ''
         bind=$mod,Backspace, submap, clean
         submap=clean
-        bind=$mod,Backspace, submap, reset
+        bind=$mod,Backspace, exec, notify-send "Dismiss"
         submap=reset
       '';
     };

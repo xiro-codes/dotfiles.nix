@@ -57,6 +57,7 @@ tooltip {
 #mpd,
 #cpu,
 #memory,
+#idle_inhibitor,
 #workspaces,
 #tray,
 #backlight {
@@ -95,13 +96,13 @@ tooltip {
     margin-right: 5px;
 }
 
-#bluetooth {
+#bluetooth,#wireplumber {
     color: #f9e2af;
     border-left: 0px;
     border-right: 0px;
 }
 
-#wireplumber, #network {
+#idle_inhibitor, #network {
     color: #89b4fa;
     border-left: 0px;
     border-right: 0px;

@@ -22,7 +22,6 @@ set autoindent
 set number
 set background=dark
 set showtabline=1
-set spell
 set spellsuggest=best,9
 set spelloptions=camel
 set nobackup
@@ -83,13 +82,13 @@ command! -nargs=* VspTerm vsp | terminal <args>
 map Q <NOP>
 map gQ <NOP>
 
-map <leader>vt :VspTerm <CR>
-map <leader>st :SpTerm <CR>
 
-map <leader>vv :Vista <CR>
-map <leader>sf :Files !<CR>
-" remap quit to close
-"
+map <leader>vv :Vista!! <CR>
+map <leader>vf :Vista focus <CR>
+nmap <leader>ac <Plug>(coc-codeaction-cursor)
+nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>qf  <Plug>(coc-fix-current)
+
 tnoremap <Esc> <C-\><C-n>
 nnoremap o o<Esc>
 nnoremap O O<Esc>
@@ -150,8 +149,7 @@ function! s:todo() abort
 endfunction
 
 let g:lightline = {'colorscheme': 'gruvbox'}
-vmap <leader>a <Plug>(coc-codeaction-selected)
-nmap <leader>a <Plug>(coc-codeaction-selected)
+autocmd CursorHold * silent call CocActionAsync('highlight')
 lua << EOF
 require("rust-tools").setup({})
 require("nvim-surround").setup({})

@@ -32,7 +32,7 @@ in
       pkgs.universal-ctags
       pkgs.python311Packages.autopep8
     ];
-    local.editor = "${pkgs.neovide}/bin/neovide";
+    local.editor = "nvim";
 
     programs.neovim = {
       enable = true;

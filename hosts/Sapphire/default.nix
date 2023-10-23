@@ -15,6 +15,7 @@
     packages = with pkgs; [
       xdg-user-dirs
       pulseaudioFull
+      steam-run
     ];
   };
 
@@ -88,6 +89,11 @@
       port = 8090;
       openFirewall = true;
     };
+    logind.extraConfig = ''
+      IdleAction=lock
+      IdleActionSec=30s
+      StopIdleSessionSec=15s
+    '';
     openssh.enable = true;
     gvfs.enable = true;
     udisks2.enable = true;
