@@ -153,4 +153,5 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 lua << EOF
 require("rust-tools").setup({})
 require("nvim-surround").setup({})
+require("flutter-tools").setup({})
 EOF

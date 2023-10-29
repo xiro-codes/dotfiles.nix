@@ -22,12 +22,13 @@
     vlc
     xarchiver
     feh
-    qpwgraph
-    ppsspp-sdl-wayland
-    pcsx2
-    ryujinx
-    yuzu-mainline
-    mangohud
+    inkscape
+    libresprite
+    vscodium-fhs
+    grim
+    slurp
+    transmission-gtk
+    godot_4
   ];
 
   fonts.fontconfig.enable = true;
@@ -40,7 +41,6 @@
     ];
     waybar.theme = "gruvbox";
   };
-
   home.file = { };
   gtk = {
     enable = true;
@@ -71,11 +71,12 @@
     };
     git = {
       enable = true;
-      userName = "tdavis";
-      userEmail = "me@tdavis.dev";
+      userName = "xiro_codes";
+      userEmail = "github@tdavis.dev";
       extraConfig = {
         credential.helper = "store";
         safe.directory = "*";
+        core.sshCommand = "ssh -i /home/tod/.ssh/github";
       };
     };
     obs-studio = {

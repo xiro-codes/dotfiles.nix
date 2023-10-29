@@ -73,8 +73,9 @@
       pulse.enable = true;
     };
     xserver = {
-      enable = true;
-      displayManager.gdm.enable = true;
+      enable = false;
+      displayManager.gdm.enable = false;
+      desktopManager.plasma5.enable = false;
       excludePackages = [ pkgs.xterm ];
     };
     greetd = {

@@ -17,7 +17,6 @@
     let
       system = "x86_64-linux";
       version = "23.11";
-      hostName = "Sapphire";
       inherit (nixpkgs.lib) foldl head tail nixosSystem;
       reduce = f: list: (foldl f (head list) (tail list));
       mapReduce = f: list: reduce (cs: s: cs // s) (map f list);
@@ -60,26 +59,5 @@
         }
       ]);
 
-      nixosConfigurations'.${hostName} = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          nixos-generators.nixosModules.all-formats
-          nixos-steamdeck.nixosModules.default
-          home-manager.nixosModules.home-manager
-          (import ./host { inherit system version hostName; })
-          ({ lib, ... }: {
-            formatConfigs.install-iso = { config, ... }: {
-              home-manager.users.tod = import ./home/home.nix;
-              fileSystems = lib.mkDefault { };
-              swapDevices = lib.mkForce [ ];
-            };
-            formatConfigs.iso = { config, ... }: {
-              home-manager.users.tod = import ./home/home.nix;
-              fileSystems = lib.mkDefault { };
-              swapDevices = lib.mkForce [ ];
-            };
-          })
-        ];
-      };
     };
 }

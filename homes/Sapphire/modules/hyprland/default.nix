@@ -123,7 +123,7 @@ in
           "steam -silent"
           #"${pkgs.easyeffects}/bin/easyeffects --gapplication-service &"
           "${pkgs.swaybg}/bin/swaybg -i ${cfg.hyprland.wallpaperPath}"
-          ''${pkgs.swayidle}/bin/swayidle lock ${swaylock}/bin/swaylock"''
+          ''${pkgs.swayidle}/bin/swayidle lock "${swaylock}/bin/swaylock"''
         ];
         monitor = map
           (m:

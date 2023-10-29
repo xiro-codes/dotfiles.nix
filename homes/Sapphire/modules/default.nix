@@ -20,6 +20,7 @@ in {
     ./fuzzel
     ./mpd
     ./fish
+    ./lf
   ];
   options.local = {
     enable = mkEnableOption "Enable custom tweaks most UX and Sytle focused.";

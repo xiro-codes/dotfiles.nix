@@ -37,56 +37,32 @@ in
     programs.neovim = {
       enable = true;
 
-      extraConfig = readFile ./init.vim;
+      extraLuaConfig = readFile ./init.lua;
+
       plugins = with pkgs.vimPlugins; ([
-        lightline-vim
         vim-nix
-        rust-tools-nvim
-        vim-startify
+        dart-vim-plugin
         vim-toml
-        vim-mustache-handlebars
-        vista-vim
-        fzf-vim
-        nvim-lspconfig
-        gruvbox-nvim
-        nvim-treesitter.withAllGrammars
+
+        lightline-vim
         lightline-gruvbox-vim
-        vim-devicons
-        nvim-surround
-        vim-grammarous
-        coc-spell-checker
-        coc-rust-analyzer
-        coc-tsserver
-        coc-tslint-plugin
-        coc-markdownlint
+        gruvbox-nvim
+
         ranger-vim
-        zoxide-vim
+
+        nvim-lspconfig
+        nvim-cmp
+        cmp-nvim-lsp
+        luasnip
+        cmp_luasnip
+        nvim-surround
+        rust-tools-nvim
+        flutter-tools-nvim
+        plenary-nvim
+
       ]);
       coc = {
-        enable = true;
-        settings.languageserver = {
-          rnix = {
-            command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
-            filetypes = [ "nix" ];
-          };
-          rust-analyzer = {
-            settings.rust-analyzer = {
-              imports.granularity.group = "module";
-            };
-          };
-          nil = {
-            command = "${pkgs.nil}/bin/nil";
-            filetypes = [ "nix" ];
-            rootPatterns = [ "flake.nix" "default.nix" "shell.nix" ];
-            settings.nil = {
-              formatting.command = [ "nixpkgs-fmt" ];
-              nix.flake = {
-                autoArchive = true;
-                autoEvalInputs = false;
-              };
-            };
-          };
-        };
+        enable = false;
       };
     };
 
