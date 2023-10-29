@@ -1,7 +1,7 @@
 {
-  system ,
-  version ,
-  hostName ,
+  system,
+  version,
+  hostName,
 }: {
   config,
   lib,

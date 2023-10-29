@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkOption types mkEnableOption;
   cfg = config.local;
-in
-{
+in {
   imports = [
   ];
   options.local.networking = {
@@ -16,10 +19,20 @@ in
     networking = {
       useDHCP = false;
       interfaces.wlan0.useDHCP = true;
-      firewall.allowedTCPPorts = [ 24070 27036 ];
-      firewall.allowedTCPPortRanges = [{from = 27015; to = 27050;}];
+      firewall.allowedTCPPorts = [24070 27036];
+      firewall.allowedTCPPortRanges = [
+        {
+          from = 27015;
+          to = 27050;
+        }
+      ];
       firewall.allowedUDPPorts = [];
-      firewall.allowedUDPPortRanges = [ {from = 27015; to = 27050;} ];
+      firewall.allowedUDPPortRanges = [
+        {
+          from = 27015;
+          to = 27050;
+        }
+      ];
       firewall.enable = true;
       networkmanager = {
         enable = true;
@@ -30,6 +43,5 @@ in
         iwd.enable = true;
       };
     };
-
   };
 }

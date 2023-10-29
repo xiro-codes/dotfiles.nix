@@ -1,10 +1,13 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkOption mkEnableOption types;
   cfg = config.local;
-in
-{
-  imports = [ ];
+in {
+  imports = [];
   options.local.boot = {
     enable = mkOption {
       type = types.bool;
@@ -19,7 +22,7 @@ in
         timeout = lib.mkForce 5;
       };
       kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-      kernelModules = [ "kvm-amd" ];
+      kernelModules = ["kvm-amd"];
       kernelParams = [
         "video=DP-3:2560x1080@60"
         "video=DP-2:1920x1080@60"

@@ -1,7 +1,8 @@
-{ pkgs
-, config
-, lib
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  ...
 }:
 with lib; let
   cfg = config.local;
@@ -30,59 +31,64 @@ with lib; let
           --effect-pixelate 40
   '';
   idle = pkgs.writeShellScriptBin "idle" ''
-      ${pkgs.swayidle}/bin/swayidle lock "${swaylock}/bin/swaylock"
+    ${pkgs.swayidle}/bin/swayidle lock "${swaylock}/bin/swaylock"
   '';
   disable = pkgs.writeShellScriptBin "disable" ''
     hyprctl dispatch submap clean && \
     notify-send -w "Keybinds disabled dismiss to Renable" -t 0 && \
     notify-send -w "Keybinds Renabled $(hyprctl dispatch submap reset)"
   '';
-in
-{
+in {
   options.local.hyprland = {
-      enable = mkOption {
-        type = types.bool;
-        default = cfg.enable;
-      };
-      wallpaperPath = mkOption {
-        type = types.str;
-        default = "~/.wallpaper";
-      };
+    enable = mkOption {
+      type = types.bool;
+      default = cfg.enable;
+    };
+    wallpaperPath = mkOption {
+      type = types.str;
+      default = "~/.wallpaper";
+    };
 
-      monitors = mkOption {
-        default = [ ];
-        type = with types; listOf (submodule {
+    monitors = mkOption {
+      default = [];
+      type = with types;
+        listOf (submodule {
           options = {
-            enabled = mkOption { type = bool; default = true; };
-            name = mkOption { type = str; };
-            width = mkOption { type = int; };
-            height = mkOption { type = int; };
-            rate = mkOption { type = int; };
-            scale = mkOption { type = int; };
-            x = mkOption { type = int; };
-            y = mkOption { type = int; };
-            workspaces = mkOption { type = listOf int; };
+            enabled = mkOption {
+              type = bool;
+              default = true;
+            };
+            name = mkOption {type = str;};
+            width = mkOption {type = int;};
+            height = mkOption {type = int;};
+            rate = mkOption {type = int;};
+            scale = mkOption {type = int;};
+            x = mkOption {type = int;};
+            y = mkOption {type = int;};
+            workspaces = mkOption {type = listOf int;};
           };
         });
-      };
     };
+  };
   config = mkIf (cfg.hyprland.enable) {
-    home.packages = with pkgs; ([
-      wl-clipboard
-      libnotify
-      easyeffects
-      cliphist
-      wtype
-      wlogout
-      bc
-      swayidle
-    ]) ++ [
-      paste-menu
-      hide_waybar
-      swaylock
-      idle
-      disable
-    ];
+    home.packages = with pkgs;
+      [
+        wl-clipboard
+        libnotify
+        easyeffects
+        cliphist
+        wtype
+        wlogout
+        bc
+        swayidle
+      ]
+      ++ [
+        paste-menu
+        hide_waybar
+        swaylock
+        idle
+        disable
+      ];
     wayland.windowManager = {
       hyprland.enable = true;
       hyprland.systemd.enable = true;
@@ -125,13 +131,16 @@ in
           "${pkgs.swaybg}/bin/swaybg -i ${cfg.hyprland.wallpaperPath}"
           ''${pkgs.swayidle}/bin/swayidle lock "${swaylock}/bin/swaylock"''
         ];
-        monitor = map
-          (m:
-            let
-              resolution = "${toString m.width}x${toString m.height}@${toString m.rate}";
-              position = "${toString m.x}x${toString m.y}";
-            in
-            "${m.name},${if m.enabled then "${resolution},${position},${toString m.scale}" else "disable"}")
+        monitor =
+          map
+          (m: let
+            resolution = "${toString m.width}x${toString m.height}@${toString m.rate}";
+            position = "${toString m.x}x${toString m.y}";
+          in "${m.name},${
+            if m.enabled
+            then "${resolution},${position},${toString m.scale}"
+            else "disable"
+          }")
           (cfg.hyprland.monitors);
 
         workspace = reduce (cs: s: cs ++ s) (map (m: map (w: "${m.name}, ${toString w}") m.workspaces) (cfg.hyprland.monitors));
@@ -193,12 +202,15 @@ in
         submap=reset
       '';
     };
-    xdg.configFile."hypr/hyprpaper.conf".text =  ''
+    xdg.configFile."hypr/hyprpaper.conf".text = ''
       preload = ~/Pictures/Wallpapers/Gruvbox/smile.jpg
       preload = ~/Pictures/Wallpapers/Gruvbox/city.png
     '';
     assertions = [
-      { assertion = config.local.rofi.enable; message = "hyprland depends on rofi"; }
+      {
+        assertion = config.local.rofi.enable;
+        message = "hyprland depends on rofi";
+      }
     ];
   };
 }

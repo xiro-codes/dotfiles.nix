@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkOption types mkEnableOption;
   cfg = config.local;
-in
-{
+in {
   imports = [
   ];
   options.local.networking = {
@@ -16,7 +19,7 @@ in
     networking = {
       useDHCP = false;
       interfaces.wlan0.useDHCP = true;
-      firewall.allowedTCPPorts = [ 24070 27036 ];
+      firewall.allowedTCPPorts = [24070 27036];
       networkmanager = {
         enable = true;
         wifi.backend = "iwd";
@@ -26,6 +29,5 @@ in
         iwd.enable = true;
       };
     };
-
   };
 }

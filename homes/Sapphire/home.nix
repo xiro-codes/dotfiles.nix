@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./modules
   ];
@@ -9,7 +11,7 @@
 
   home.stateVersion = "23.05"; # Please read the comment before changing.
   nixpkgs.config.allowUnfree = true;
-  home.packages = with pkgs;[
+  home.packages = with pkgs; [
     librewolf
     nerdfonts
     unzip
@@ -36,12 +38,30 @@
     enable = true;
     fileManager = "${pkgs.pcmanfm}/bin/pcmanfm";
     hyprland.monitors = [
-          {name = "DP-1"; scale= 1; width = 1920; height=1080; rate=60; x=0; y=1080; workspaces = [ 1 2 3];}
-          {name = "DP-2"; scale= 1; width = 1920; height=1080; rate=60; x=0; y=0; workspaces = [ 4 5 6];}
+      {
+        name = "DP-1";
+        scale = 1;
+        width = 1920;
+        height = 1080;
+        rate = 60;
+        x = 0;
+        y = 1080;
+        workspaces = [1 2 3];
+      }
+      {
+        name = "DP-2";
+        scale = 1;
+        width = 1920;
+        height = 1080;
+        rate = 60;
+        x = 0;
+        y = 0;
+        workspaces = [4 5 6];
+      }
     ];
     waybar.theme = "gruvbox";
   };
-  home.file = { };
+  home.file = {};
   gtk = {
     enable = true;
     cursorTheme = {
@@ -49,7 +69,7 @@
       name = "Vanilla-DMZ";
       size = 16;
     };
-    theme= {
+    theme = {
       package = pkgs.gruvbox-dark-gtk;
       name = "gruvbox-dark";
     };
@@ -60,7 +80,7 @@
   };
   qt = {
     enable = false;
-    platformTheme="gtk";
+    platformTheme = "gtk";
   };
   # Let Home Manager install and manage itself.
   programs = {

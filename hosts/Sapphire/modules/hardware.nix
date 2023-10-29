@@ -1,13 +1,15 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkOption types;
   cfg = config.local;
-in
-{
+in {
   imports = [
-
   ];
-  options.local.hardware= {
+  options.local.hardware = {
     enable = mkOption {
       type = types.bool;
       default = cfg.enable;
@@ -17,7 +19,7 @@ in
     hardware = {
       bluetooth.enable = true;
       opengl.enable = true;
-	  keyboard.qmk.enable = true;
+      keyboard.qmk.enable = true;
       pulseaudio.enable = lib.mkForce false;
       enableRedistributableFirmware = true;
     };

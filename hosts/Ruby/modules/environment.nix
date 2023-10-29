@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkOption types mkEnableOption;
   cfg = config.local;
-in
-{
+in {
   imports = [
   ];
   options.local.environment = {

@@ -1,10 +1,13 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkOption mkEnableOption types;
   cfg = config.local;
-in
-{
-  imports = [ ];
+in {
+  imports = [];
   options.local.boot = {
     enable = mkOption {
       type = types.bool;
@@ -18,7 +21,7 @@ in
         systemd-boot.enable = true;
         timeout = lib.mkForce 1;
       };
-      kernelParams = [ "fbcon=rotate:1"];
+      kernelParams = ["fbcon=rotate:1"];
     };
   };
 }

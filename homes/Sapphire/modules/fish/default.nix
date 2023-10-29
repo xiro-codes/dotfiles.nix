@@ -1,18 +1,18 @@
-{ pkgs
-, config
-, lib
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  ...
 }:
 with lib; let
   cfg = config.local;
-in
-{
+in {
   options.local.fish.enable = mkOption {
     type = types.bool;
     default = cfg.enable;
   };
   config = mkIf cfg.fish.enable {
-    home.packages = with pkgs; [ oh-my-fish ];
+    home.packages = with pkgs; [oh-my-fish];
     programs = {
       eza = {
         enable = true;

@@ -34,7 +34,6 @@ in {
     launcher = mkOption {type = types.str;};
     wifi = mkOption {type = types.str;};
     bluetooth = mkOption {type = types.str;};
-
   };
 
   config = mkIf (cfg.enable) {

@@ -1,9 +1,9 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   cfg = config.local.automount;
   script = pkgs.writeShellScriptBin "automount" ''
     function mount_drive () {
@@ -39,39 +39,39 @@ let
     exit 0;
   '';
 in
-with lib; {
-  imports = [
-  ];
-  options.local.automount = {
-    enable = mkEnableOption "enable automount system";
-    user = mkOption {
-      type = types.str;
-      default = "deck";
-    };
-    patterns = mkOption {
-      type = types.listOf types.str;
-      default = [
-        "sd[a-z][0-9]"
-      ];
-      description = mdDoc "udev pattern for drives to mount";
-    };
-  };
-  config = mkIf cfg.enable {
-    services.udev = {
-      extraRules = strings.concatLines (map
-        (pattern: ''
-          KERNEL=="${pattern}", ACTION=="add", RUN+="${pkgs.systemd}/bin/systemctl start --no-block jovian-automount@%k.service"
-          KERNEL=="${pattern}", ACTION=="remove", RUN+="${pkgs.systemd}/bin/systemctl stop --no-block jovian-automount@%k.service"
-        '')
-        cfg.patterns);
-    };
-    systemd.services."jovian-automount@" = {
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = "${script}/bin/automount add %i";
-        ExecStop = "${script}/bin/automount remove %i";
+  with lib; {
+    imports = [
+    ];
+    options.local.automount = {
+      enable = mkEnableOption "enable automount system";
+      user = mkOption {
+        type = types.str;
+        default = "deck";
+      };
+      patterns = mkOption {
+        type = types.listOf types.str;
+        default = [
+          "sd[a-z][0-9]"
+        ];
+        description = mdDoc "udev pattern for drives to mount";
       };
     };
-  };
-}
+    config = mkIf cfg.enable {
+      services.udev = {
+        extraRules = strings.concatLines (map
+          (pattern: ''
+            KERNEL=="${pattern}", ACTION=="add", RUN+="${pkgs.systemd}/bin/systemctl start --no-block jovian-automount@%k.service"
+            KERNEL=="${pattern}", ACTION=="remove", RUN+="${pkgs.systemd}/bin/systemctl stop --no-block jovian-automount@%k.service"
+          '')
+          cfg.patterns);
+      };
+      systemd.services."jovian-automount@" = {
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${script}/bin/automount add %i";
+          ExecStop = "${script}/bin/automount remove %i";
+        };
+      };
+    };
+  }

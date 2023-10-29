@@ -1,15 +1,14 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkOption mkIf types;
   inherit (builtins) readFile;
   cfg = config.local;
-in
-{
-  imports = [ ];
+in {
+  imports = [];
   options.local.neovim = {
     enable = mkOption {
       type = types.bool;
@@ -39,7 +38,7 @@ in
 
       extraLuaConfig = readFile ./init.lua;
 
-      plugins = with pkgs.vimPlugins; ([
+      plugins = with pkgs.vimPlugins; [
         vim-nix
         dart-vim-plugin
         vim-toml
@@ -59,8 +58,7 @@ in
         rust-tools-nvim
         flutter-tools-nvim
         plenary-nvim
-
-      ]);
+      ];
       coc = {
         enable = false;
       };

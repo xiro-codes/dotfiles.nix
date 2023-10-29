@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf mkOption types mkEnableOption;
   cfg = config.local;
-in
-{
+in {
   imports = [
     ./boot.nix
     ./environment.nix
@@ -15,7 +18,7 @@ in
     enable = mkEnableOption "Simplfy man host config";
     packages = mkOption {
       type = types.listOf types.package;
-      default = [ ];
+      default = [];
     };
   };
   config = mkIf cfg.enable {

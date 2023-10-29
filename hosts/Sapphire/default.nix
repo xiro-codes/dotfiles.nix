@@ -1,12 +1,13 @@
-{ system
-, version
-, hostName
-,
-}: { config
-   , lib
-   , pkgs
-   , ...
-   }: {
+{
+  system,
+  version,
+  hostName,
+}: {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./modules
   ];
@@ -22,7 +23,7 @@
   networking.hostName = hostName;
   security.sudo.wheelNeedsPassword = false;
   security.polkit.enable = true;
-  security.pam.services.swaylock = { };
+  security.pam.services.swaylock = {};
 
   fileSystems = {
     "/" = {
@@ -48,14 +49,13 @@
     };
   };
   swapDevices = [
-    { device = "/dev/disk/by-label/SWAP"; }
+    {device = "/dev/disk/by-label/SWAP";}
   ];
-
 
   users.users.tod = {
     name = "tod";
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "networkmanager" "input" "uinput" "dialout" ];
+    extraGroups = ["wheel" "audio" "networkmanager" "input" "uinput" "dialout"];
     shell = pkgs.fish;
     password = "sapphire";
   };
@@ -76,7 +76,7 @@
       enable = false;
       displayManager.gdm.enable = false;
       desktopManager.plasma5.enable = false;
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = [pkgs.xterm];
     };
     greetd = {
       enable = false;
