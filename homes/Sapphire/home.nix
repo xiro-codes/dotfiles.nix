@@ -31,6 +31,7 @@
     slurp
     transmission-gtk
     godot_4
+    xivlauncher
   ];
 
   fonts.fontconfig.enable = true;
