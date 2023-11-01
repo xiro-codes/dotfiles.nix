@@ -27,7 +27,7 @@ in {
         "video=DP-3:2560x1080@60"
         "video=DP-2:1920x1080@60"
       ];
-      initrd.kernelModules = ["amdgpu"];
+      initrd.kernelModules = [];
       initrd.availableKernelModules = [
         "xhci_pci"
         "ahci"

@@ -79,7 +79,7 @@
       excludePackages = [pkgs.xterm];
     };
     greetd = {
-      enable = false;
+      enable = true;
       settings.default_session = {
         command = "${pkgs.hyprland}/bin/Hyprland";
         user = "tod";
