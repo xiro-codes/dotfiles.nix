@@ -2,6 +2,7 @@
   system,
   version,
   hostName,
+  ...
 }: {
   config,
   lib,

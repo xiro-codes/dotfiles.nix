@@ -12,7 +12,7 @@
     home-manager,
     nixos-generators,
     nixos-steamdeck,
-  }: let
+  } : let
     system = "x86_64-linux";
     version = "23.11";
     inherit (nixpkgs.lib) foldl head tail nixosSystem;
@@ -26,7 +26,7 @@
       in {
         ${hostName} = nixosSystem {
           inherit system;
-          modules = earlyModules ++ [(import ./hosts/${hostName} {inherit system version hostName;})] ++ lateModules;
+          modules = earlyModules ++ [(import ./hosts/${hostName} {inherit system version hostName self;})] ++ lateModules;
         };
       }) [
         {

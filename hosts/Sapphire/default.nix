@@ -2,6 +2,7 @@
   system,
   version,
   hostName,
+  self,
 }: {
   config,
   lib,
@@ -24,7 +25,7 @@
   security.sudo.wheelNeedsPassword = false;
   security.polkit.enable = true;
   security.pam.services.swaylock = {};
-
+  environment.etc."nixos-backups/${self.shortRev}".source = self.outPath;  
   fileSystems = {
     "/" = {
       label = "ROOT";
