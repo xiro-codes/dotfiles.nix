@@ -18,9 +18,10 @@ vim.opt.spelloptions = "camel"
 -- Undo
 vim.opt.undofile = true
 vim.opt.undodir = HOME .. "/.config/nvim/undo"
+-- Wrap
+vim.opt.wrap = false
 -- Colors
 vim.opt.background = "dark"
-
 vim.cmd([[colorscheme gruvbox]])
 vim.cmd([[syntax enable]])
 vim.cmd([[filetype plugin indent on]])

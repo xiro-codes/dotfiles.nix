@@ -118,6 +118,7 @@ in {
           "float, ^(feh)$"
           "float, title:^(btop)"
           "float, title:^(game)"
+          "float, title:^(Dioxus app)"
           "nofocus, com-group_finity-mascot-Main"
           "noblur, com-group_finity-mascot-Main"
           "noshadow, com-group_finity-mascot-Main"
@@ -158,7 +159,7 @@ in {
           "$mod, V, exec, paste-menu"
           "$mod_SHIFT, Q, killactive"
 
-          "$mod_SHIFT, Backspace, exec, rofi -show power-menu -modi power-menu:rofi-powermenu"
+          "$mod, Backspace, exec, rofi -show power-menu -modi power-menu:rofi-powermenu"
           "$mod, F, fullscreen"
           "$mod_SHIFT, F, togglefloating"
           "$mod, X, exec, ${hide_waybar}/bin/hide_waybar"
@@ -187,20 +188,12 @@ in {
           "$mod_SHIFT, M, movetoworkspace, 4"
           "$mod_SHIFT, comma,   movetoworkspace, 5"
           "$mod_SHIFT, period, movetoworkspace, 6"
-
-          "$mod, Backspace, exec, ${disable}/bin/disable"
         ];
         bindm = [
           "$mod,mouse:272, movewindow"
           "$mod,mouse:273, resizewindow"
         ];
       };
-      hyprland.extraConfig = ''
-        bind=$mod,Backspace, submap, clean
-        submap=clean
-        bind=$mod,Backspace, exec, notify-send "Dismiss"
-        submap=reset
-      '';
     };
     xdg.configFile."hypr/hyprpaper.conf".text = ''
       preload = ~/Pictures/Wallpapers/Gruvbox/smile.jpg
