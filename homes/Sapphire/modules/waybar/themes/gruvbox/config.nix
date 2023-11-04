@@ -20,7 +20,6 @@
     "modules-center" = ["hyprland/window"];
     "modules-right" = [
       "tray"
-      "idle_inhibitor"
       "wireplumber"
       "bluetooth"
       "mpd"
