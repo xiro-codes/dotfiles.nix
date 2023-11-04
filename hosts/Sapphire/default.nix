@@ -26,6 +26,7 @@
   security.polkit.enable = true;
   security.pam.services.swaylock = {};
   environment.etc."nixos-backups/${self.shortRev}".source = self.outPath;  
+  virtualisation.anbox.enable = true;
   fileSystems = {
     "/" = {
       label = "ROOT";
