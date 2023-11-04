@@ -24,13 +24,9 @@
     vlc
     xarchiver
     feh
-    inkscape
-    libresprite
-    vscodium-fhs
     grim
     slurp
     transmission-gtk
-    godot_4
     xivlauncher
   ];
 

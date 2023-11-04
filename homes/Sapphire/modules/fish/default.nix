@@ -26,6 +26,7 @@ in {
         shellAbbrs = {
           ls = "eza --icons";
           gcd = ''git commit -m "$(date)"'';
+          rebuild = ''todo!'';
         };
         interactiveShellInit = ''
           set -g fish_color_normal 3760bf
