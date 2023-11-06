@@ -28,6 +28,7 @@
     slurp
     transmission-gtk
     xivlauncher
+    osu-lazer-bin
   ];
 
   fonts.fontconfig.enable = true;

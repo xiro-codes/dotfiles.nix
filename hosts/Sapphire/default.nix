@@ -26,7 +26,6 @@
   security.polkit.enable = true;
   security.pam.services.swaylock = {};
   environment.etc."nixos-backups/${self.shortRev}".source = self.outPath;
-  virtualisation.waydroid.enable = true;
   fileSystems = {
     "/" = {
       label = "ROOT";
@@ -73,10 +72,11 @@
     pipewire = {
       enable = true;
       pulse.enable = true;
+      alsa.enable = true;
     };
     xserver = {
       enable = false;
-      displayManager.gdm.enable = false;
+      displayManager.sddm.enable = false;
       desktopManager.plasma5.enable = false;
       excludePackages = [pkgs.xterm];
     };
