@@ -52,6 +52,7 @@ in {
           zoxide init fish | source
           fish_vi_key_bindings
           set -g snorin_chevrons green green green
+          ${pkgs.neofetch}/bin/neofetch
         '';
       };
     };

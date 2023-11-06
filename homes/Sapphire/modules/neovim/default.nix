@@ -49,7 +49,6 @@ in {
       nvs
     ];
     local.editor = "nvim";
-    local.gui-editor = "${nvc}/bin/nvc 7779";
 
     programs.neovim = {
       enable = true;

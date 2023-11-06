@@ -22,7 +22,7 @@ in {
         timeout = lib.mkForce 5;
       };
       kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
-      kernelModules = ["kvm-amd"];
+      kernelModules = ["kvm-amd" "amdgpu"];
       kernelParams = [];
       initrd.kernelModules = [];
       initrd.availableKernelModules = [
