@@ -23,7 +23,7 @@ in {
       };
       kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
       kernelModules = ["kvm-amd"];
-      kernelParams = [ ];
+      kernelParams = [];
       initrd.kernelModules = [];
       initrd.availableKernelModules = [
         "xhci_pci"

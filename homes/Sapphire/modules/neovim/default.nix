@@ -5,18 +5,32 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
-  inherit (builtins) readFile;
+  inherit (pkgs) writeShellApplication writeShellScriptBin;
+  inherit (builtins) readFile toString;
   cfg = config.local;
+  nvr = writeShellApplication {
+    name = "nvr";
+    runtimeInputs = with pkgs; [
+      neovim-remote
+    ];
+    text = ''
+      nvr --servername localhost:"$1" "''${@:2}"
+    '';
+  };
+  nvs = writeShellScriptBin "nvs" ''nvim --headless --listen localhost:"$1" '';
+  nvc = writeShellApplication {
+    name = "nvc";
+    runtimeInputs = with pkgs; [neovide];
+    text = ''
+      neovide --server=localhost:"$1" "''${@:2}"
+    '';
+  };
 in {
   imports = [];
   options.local.neovim = {
     enable = mkOption {
       type = types.bool;
       default = cfg.enable;
-    };
-    port = mkOption {
-      type = types.port;
-      default = 6789;
     };
   };
   config = mkIf (cfg.neovim.enable) {
@@ -30,8 +44,12 @@ in {
       pkgs.fzf
       pkgs.universal-ctags
       pkgs.python311Packages.autopep8
+      nvr
+      nvc
+      nvs
     ];
     local.editor = "nvim";
+    local.gui-editor = "${nvc}/bin/nvc 7779";
 
     programs.neovim = {
       enable = true;
@@ -63,16 +81,5 @@ in {
         enable = false;
       };
     };
-
-    #systemd.user.services.nvs= {
-    #  Unit = {
-    #    After = [ "sway-session.target" ];
-    #  };
-    #  Install = { WantedBy = [ "sway-session.target" ]; };
-    #  Service = {
-    #    ExecStart = "${nvs}/bin/nvs";
-    #    Restart = "always";
-    #  };
-    #};
   };
 }

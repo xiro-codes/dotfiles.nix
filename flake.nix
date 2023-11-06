@@ -12,7 +12,7 @@
     home-manager,
     nixos-generators,
     nixos-steamdeck,
-  } : let
+  }: let
     system = "x86_64-linux";
     version = "23.11";
     inherit (nixpkgs.lib) foldl head tail nixosSystem;

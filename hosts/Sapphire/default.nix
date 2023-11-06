@@ -25,7 +25,7 @@
   security.sudo.wheelNeedsPassword = false;
   security.polkit.enable = true;
   security.pam.services.swaylock = {};
-  environment.etc."nixos-backups/${self.shortRev}".source = self.outPath;  
+  environment.etc."nixos-backups/${self.shortRev}".source = self.outPath;
   virtualisation.waydroid.enable = true;
   fileSystems = {
     "/" = {

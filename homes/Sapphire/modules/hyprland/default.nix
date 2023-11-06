@@ -94,9 +94,13 @@ in {
       hyprland.systemd.enable = true;
       hyprland.settings = {
         general = {
+          layout = "master";
           border_size = "2";
           "col.active_border" = "rgba(33ccffee)";
           "col.inactive_border" = "rgba(595959aa)";
+        };
+        master = {
+          new_is_master = false;
         };
         decoration = {
           rounding = "10";
@@ -131,6 +135,7 @@ in {
           #"${pkgs.easyeffects}/bin/easyeffects --gapplication-service &"
           "${pkgs.swaybg}/bin/swaybg -i ${cfg.hyprland.wallpaperPath}"
           ''${pkgs.swayidle}/bin/swayidle lock "${swaylock}/bin/swaylock"''
+          ''${variables.EDITOR_SERVER} 7779''
         ];
         monitor =
           map
@@ -149,12 +154,12 @@ in {
         bind = [
           "$mod, Return, exec, ${variables.TERMINAL}"
           "$mod_SHIFT, Return, exec, ${variables.TERMINAL} --class=fkitty"
-          "$mod, E, exec, ${variables.EDITOR}"
-          "$mod_SHIFT, E, exec, ${variables.FILEMANAGER}"
+          "$mod, E, exec, ${variables.GUI_EDITOR}"
+          "$mod_SHIFT, E, exec, ${variables.GUI_FILEMANAGER}"
 
           "$mod, P, exec, ${variables.LAUNCHER} -show drun -show-icons"
           "$mod_SHIFT, P, exec, ${variables.LAUNCHER} -show run -show-icons"
-          "$mod, Space, exec, ${variables.LAUNCHER} -show window -show-icons"
+          "$mod, Space, layoutmsg, swapwithmaster master"
 
           "$mod, V, exec, paste-menu"
           "$mod_SHIFT, Q, killactive"
