@@ -44,6 +44,7 @@ in {
       pkgs.fzf
       pkgs.universal-ctags
       pkgs.python311Packages.autopep8
+      pkgs.nodejs
       nvr
       nvc
       nvs
@@ -75,6 +76,7 @@ in {
         rust-tools-nvim
         flutter-tools-nvim
         plenary-nvim
+        copilot-vim
       ];
       coc = {
         enable = false;

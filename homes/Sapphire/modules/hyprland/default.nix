@@ -98,13 +98,16 @@ in {
           border_size = "2";
           "col.active_border" = "rgba(33ccffee)";
           "col.inactive_border" = "rgba(595959aa)";
+          "gaps_in" = "2";
+          "gaps_out" = "4";
         };
         master = {
           new_is_master = false;
+          mfact = "0.5";
         };
         decoration = {
-          rounding = "10";
-          shadow_offset = "3 8";
+          rounding = "2";
+          shadow_offset = "0 4";
           "col.shadow" = "rgba(00000099)";
           inactive_opacity = "0.7";
           active_opacity = "0.9";
