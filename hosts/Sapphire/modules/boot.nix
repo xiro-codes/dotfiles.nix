@@ -21,8 +21,8 @@ in {
         systemd-boot.enable = true;
         timeout = lib.mkForce 5;
       };
-      kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
-      kernelModules = ["kvm-amd" "amdgpu"];
+      #kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+      kernelModules = ["kvm-amd"];
       kernelParams = [];
       initrd.kernelModules = [];
       initrd.availableKernelModules = [
