@@ -18,7 +18,7 @@ in {
   config = mkIf cfg.environment.enable {
     environment.variables = {
       CLUTTER_BACKEND = "wayland";
-      GDK_BACKEND = "x11";
+      GDK_BACKEND = "wayland";
       GDK_DPI_SCALE = "1";
       MOZ_ENABLE_WAYLAND = "1";
       QT_QPA_PLATFORM = "wayland";
