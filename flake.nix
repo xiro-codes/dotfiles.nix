@@ -2,7 +2,7 @@
   description = "Desktop";
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:xiro-codes/home-manager";
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-steamdeck.url = "github:Jovian-Experiments/Jovian-NixOS";
   };
