@@ -16,6 +16,9 @@ with lib; let
   paste-menu = pkgs.writeShellScriptBin "paste-menu" ''
     wtype "$(cliphist list | rofi -dmenu | cliphist decode )"
   '';
+  tts-menu = pkgs.writeShellScriptBin "tts-menu" ''
+    espeak "$( cliphist list | rofi -dmenu | cliphist decode )"
+  '';
   swaylock = pkgs.writeShellScriptBin "swaylock" ''
     ${pkgs.swaylock-effects}/bin/swaylock --screenshots \
           --clock \
@@ -74,6 +77,7 @@ in {
     home.packages = with pkgs;
       [
         wl-clipboard
+        espeak
         libnotify
         easyeffects
         cliphist
@@ -84,6 +88,7 @@ in {
       ]
       ++ [
         paste-menu
+        tts-menu
         hide_waybar
         swaylock
         idle
@@ -164,6 +169,7 @@ in {
           "$mod, Space, layoutmsg, swapwithmaster master"
 
           "$mod, V, exec, paste-menu"
+          "$mod, S, exec, tts-menu"
           "$mod_SHIFT, Q, killactive"
 
           "$mod, Backspace, exec, rofi -show power-menu -modi power-menu:rofi-powermenu"
