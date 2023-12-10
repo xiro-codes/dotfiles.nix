@@ -40,18 +40,8 @@
       noCheck = true;
       fsType = "ntfs";
     };
-    "/mnt/ssd" = {
-      device = "/dev/vg.ssd/SSD";
-      fsType = "ext4";
-    };
-    "/mnt/hdd" = {
-      device = "/dev/vg.hdd/HDD";
-      fsType = "ext4";
-    };
   };
-  swapDevices = [
-    {device = "/dev/disk/by-label/SWAP";}
-  ];
+  swapDevices = [  ];
 
   users.users.tod = {
     name = "tod";
@@ -92,11 +82,11 @@
       port = 8090;
       openFirewall = true;
     };
-    logind.extraConfig = ''
-      IdleAction=lock
-      IdleActionSec=30s
-      StopIdleSessionSec=15s
-    '';
+    #logind.extraConfig = ''
+    #  IdleAction=lock
+    #  IdleActionSec=30s
+    #  StopIdleSessionSec=15s
+    #'';
     openssh.enable = true;
     gvfs.enable = true;
     udisks2.enable = true;
